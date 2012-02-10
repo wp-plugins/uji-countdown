@@ -14,7 +14,7 @@
 .countdown_section {
 	display: block;
 	float: left;
-	margin: 0 10px 0 0; /*uji*/
+	margin: 0 10px 0 0;
 	text-align: center;
 }
 .countdown_amount {
@@ -30,8 +30,8 @@
 /*----------ujiCountdown------------*/
 
 #ujiCountdown{
-	width: inherit;  /*--custom--*/
 	overflow: hidden;
+	display: inline-block;
 }
 .countdown_amount {
 	color: #fff;

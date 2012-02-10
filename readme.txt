@@ -4,7 +4,7 @@ Donate link: http://wpmanage.com/Uji-countdown
 Tags: countdown, counter, html5 countdown, animated countdown, countdown timer, count down, countdown clock, jQuery countdown, clock, timer
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Uji Countdown - HTML5 Customizable Countdown Timer
 
@@ -16,15 +16,18 @@ Features:
 
 * HTML5 features
 * No flash, only javascript!
-* Customize of colors for texts and background
+* Customize of colors for text and background
 * Customize boxes color
 * Enable animation
 * Set the texts for date, time
 * Create unlimited styles
-* Simple using shortcodes
+* Simple using shortcode
 * Multilanguage support for date
 
 http://www.youtube.com/watch?v=NMDoUU8CQIs
+
+**Plugin's Official Site**
+WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-countdown/)
 
 == Installation ==
 
@@ -38,8 +41,11 @@ http://www.youtube.com/watch?v=NMDoUU8CQIs
 1. Create your new Countdown style.
 2. Place your Countdown in Post/Page via Edit: Post or Page.
 
-
 == Changelog ==
+
+= 1.0.1 =
+
+* Fix align center.
 
 = 1.0 =
 

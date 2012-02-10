@@ -3,7 +3,7 @@
 Plugin Name: Uji Countdown
 Plugin URI: http://www.wpmanage.com/uji-countdown/
 Description: HTML5 Countdown.
-Version: 1.0
+Version: 1.0.1
 Author: Ujog Raul
 Author URI: http://www.wpmanage.com
 
@@ -29,7 +29,7 @@ if (!defined('UJI_VERSION_KEY'))
     define('UJI_VERSION_KEY', 'UJI_version');
 
 if (!defined('UJI_VERSION_NUM'))
-    define('UJI_VERSION_NUM', '1.0');
+    define('UJI_VERSION_NUM', '1.0.1');
 
 ///////////////////////////////////DB///////////////////////////////////////
 
