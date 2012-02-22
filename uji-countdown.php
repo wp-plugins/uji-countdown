@@ -3,7 +3,7 @@
 Plugin Name: Uji Countdown
 Plugin URI: http://www.wpmanage.com/uji-countdown/
 Description: HTML5 Countdown.
-Version: 1.0.1
+Version: 1.0.2
 Author: Ujog Raul
 Author URI: http://www.wpmanage.com
 
@@ -29,7 +29,7 @@ if (!defined('UJI_VERSION_KEY'))
     define('UJI_VERSION_KEY', 'UJI_version');
 
 if (!defined('UJI_VERSION_NUM'))
-    define('UJI_VERSION_NUM', '1.0.1');
+    define('UJI_VERSION_NUM', '1.0.2');
 
 ///////////////////////////////////DB///////////////////////////////////////
 
@@ -151,16 +151,10 @@ if(in_array(UJI_CURRENT_PAGE, array('post.php', 'page.php', 'page-new.php', 'pos
  
 ////////////////////////////////////ENQUIRE SCRIPT////////////////////////////////////////
 
-function ujic_scripts_enqueue() {
-	global $post;
-	if (false !== (strpos( $post->post_content, '[ujicountdown' ))){
-		wp_register_style('ujiStyleCount', UJI_PLUGIN_URL . '/css/jquery.countdown.css');
-	    wp_enqueue_style( 'ujiStyleCount');
-		wp_enqueue_script('jquery');
-		wp_enqueue_script('UJI_js_countdown', UJI_PLUGIN_URL . '/js/jquery.countdown.js', array('jquery'), '1.0', true);
-	}
-}    
- 
-add_action('wp_enqueue_scripts', 'ujic_scripts_enqueue');
+function ujic_scripts_register() {
+	wp_register_style('ujiStyleCount', UJI_PLUGIN_URL . '/css/jquery.countdown.css');
+	wp_register_script('UJI_js_countdown', UJI_PLUGIN_URL . '/js/jquery.countdown.js', array('jquery'), '1.0', true);
+}
+add_action('init', 'ujic_scripts_register');
  
 ?>

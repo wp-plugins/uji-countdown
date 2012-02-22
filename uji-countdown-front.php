@@ -83,6 +83,11 @@ function ujic_forms(){
 
 function ujic_code( $atts, $content = null ) { 
 	global $wpdb;
+	
+	wp_enqueue_style( 'ujiStyleCount');
+	wp_enqueue_scripts('jQuery');
+	wp_print_scripts('UJI_js_countdown');
+	
 	 extract(shortcode_atts(array(
 	      'id' 		=> "ujic-black",
 		  'expire'	=>"2012/2/21 01:00:00"
@@ -112,7 +117,7 @@ function ujic_code( $atts, $content = null ) {
 	$ujic_txt = !empty($ujic_txt) ? 'true' : 'false';
 	$ujic_ani = !empty($ujic_ani) ? 'true' : 'false';
 
-	if($class=='center'){ $center_script = 'jQuery("#ujiCountdown").css({"width": (jQuery("#ujiCountdown").width())+"px", "padding-left": "10px", "display": "block"});';} else{$center_script = '';}
+	if($class=='center'){ $center_script = 'jQuery("#ujiCountdown").css({"width": (jQuery("#ujiCountdown").width()+5)+"px", "padding-left": "10px", "display": "block"});';} else{$center_script = '';}
 $script ='	<script type="text/javascript">
 			<!--
 						 jQuery(document).ready(function($){
