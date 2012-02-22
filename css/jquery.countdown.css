@@ -1,0 +1,103 @@
+/* Uji Countdown:
+ * Copyright (c) 2012 Ujimoto
+ * Project      : http://wpmanage.com/uji-countdown
+ */
+.countdown_rtl {
+	direction: rtl;
+}
+.countdown_row {
+	clear: both;
+	display: block;
+	text-align: center;
+	overflow: hidden;
+}
+.countdown_section {
+	display: block;
+	float: left;
+	margin: 0 10px 0 0;
+	text-align: center;
+}
+.countdown_amount {
+	display: inline-block;
+}
+.countdown_txt {
+	display: block;
+	text-align: center;
+}
+.countdown_descr {
+	display: block;
+}
+/*----------ujiCountdown------------*/
+
+#ujiCountdown{
+	overflow: hidden;
+	display: inline-block;
+}
+.countdown_amount {
+	color: #fff;
+	padding: 5px 10px 5px 10px;
+	margin-right: 2px;
+
+	font: 35px/1.5 'Open Sans Condensed',sans-serif;
+	font-weight: bold; 
+	
+	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.5, #3A3A3A),
+		color-stop(0.5, #635b63)
+	);
+   -webkit-border-radius: 5px;
+   -ms-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+	text-shadow: 1px 1px 1px #000; 
+}
+.countdown_txt {
+	padding: 5px;
+	font-family: 'Open Sans Condensed',sans-serif;
+	display: block;
+	clear: both;
+	float: none;
+	position: relative;
+	z-index: 99;
+}
+#uji_sec{
+	overflow: hidden;
+	display: block;
+    float: left;
+    margin: 0 10px 0 0;
+    text-align: center;
+}
+#uji_sec .countdown_section{
+	position: relative;
+	overflow: hidden;
+	display: block;
+}
+#uji_sec .countdown_amount{
+	float: left;
+	display: inline-block;
+}
+.ujic_center{
+	margin: 0 auto;
+	display: block;
+	float: none;
+	clear: both;
+	overflow: hidden;
+}
+.ujic_left{
+	display: block;
+	float: left;
+}
+.ujic_right{
+	display: block;
+	float: right;
+	overflow: hidden;
+}
+.ujic_none{
+	display: block;
+}
