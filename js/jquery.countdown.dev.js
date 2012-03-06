@@ -33,6 +33,7 @@ function Countdown() {
 		color_txt : '#ffffff',
 		color_sw : '#000000',
 		ujic_txt : true,
+		ujic_url : false,
 		until: null, // new Date(year, mth - 1, day, hr, min, sec) - date/time to count down to
 			// or numeric for seconds offset, or string for unit offset(s):
 			// 'Y' years, 'O' months, 'W' weeks, 'D' days, 'H' hours, 'M' minutes, 'S' seconds
@@ -215,6 +216,19 @@ $.extend(Countdown.prototype, {
 		}
 		$target.html(this._generateHTML(inst));
 		//ujimoto
+		
+		var ujic_url = this._get(inst, 'ujic_url');
+		var ujic_until = this._get(inst, 'until');
+		var foo = new Date; // Generic JS date object
+		var unixtime = parseInt(foo.getTime() / 1000);
+		var until_time = parseInt(ujic_until.getTime() / 1000)-2; 
+		/*delay 2 seconds for run process*/
+
+		if(ujic_url && (unixtime>until_time)){
+			window.location.replace(ujic_url);
+			
+		}
+
 		var color_down = this._get(inst, 'color_down');
 		var color_up = this._get(inst, 'color_up');
 		jQuery( '.countdown_amount').css("background-image", "linear-gradient(bottom, "+color_down+" 50%, "+color_up+" 50%)");

@@ -15,7 +15,30 @@ function add_ujic_popup(){
 					timeFormat: 'hh:mm',
 					dateFormat: 'yy/mm/dd'
 					});
+					
+					jQuery('#urlujic').keyup(function () {
+						var value = jQuery(this).val();
+
+						if(value){			  
+							//jQuery('#hideujic').hide();
+							jQuery('input[name=hideujic]').attr('checked', false);
+						}else{
+							jQuery('input[name=hideujic]').attr('checked', true);
+						}
+						
+					}).keyup();
 				});
+
+			function isUrl(url) {
+				var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+				if(RegExp.test(url)){
+					return true;
+				}else{
+					return false;
+				}
+			}
+
+	
             function InsertContdown(){
 				
 				
@@ -29,9 +52,22 @@ function add_ujic_popup(){
                     alert("Please select time for countdown");
                     return;
                 }
+				var url = "";
+				var url_id = jQuery('#urlujic').val();
+                if(url_id != "" &&  !isUrl(url_id)){
+                    alert("Please insert valid link");
+                    return;
+                }else if(url_id != ""){
+					url = " url = \"" + url_id + "\"";
+				}
+				var hide = "";
+				if( jQuery('input[name=hideujic]').is(':checked')){
+					var hide = " hide = \"true\"";
+				}
+				
 
                 var form_name = jQuery("#add_form_id option[value='" + style_id + "']").text().replace(/[\[\]]/g, '');
-                window.send_to_editor("[ujicountdown id=\"" + style_id + "\" expire=\"" + time_id  + "\"]");
+                window.send_to_editor("[ujicountdown id=\"" + style_id + "\" expire=\"" + time_id  + "\"" + hide + url +"]");
             }
         </script>
 
@@ -45,6 +81,7 @@ function add_ujic_popup(){
                         </span>
                     </div>
                     <div style="padding:15px 15px 0 15px;">
+                    <h3 style="display:block; font-size:14px; margin-bottom:10px">Select style:</h3>
                         <select id="add_style">
                             <option value=""> Select a Style </option>
                             <?php
@@ -53,10 +90,18 @@ function add_ujic_popup(){
                         </select> 
                     </div>
                     <div style="padding:15px 15px 0 15px;">
-                    	<span style="display:block; font-size:14px; margin-bottom:10px">Countdown Expire In:</span>
+                    	<h3 style="display:block; font-size:14px; margin-bottom:10px">Countdown Expire In:</h3>
                         <input type="text" value="" width="200px" id="dateujic"  />         
                     </div>
-                   
+                    <div style="padding:15px 15px 0 15px;">
+                    	<h3 style="display:block; font-size:14px; margin-bottom:10px">After expiry:</h3>
+                        <span style="inline-block; font-size:14px; margin:0px 10px 0 10px">Hide countdown:</span>
+                        <input name="hideujic" id="hideujic" type="checkbox" value="1" checked />
+                        <div style="display:block; padding: 10px 0 10px 0">
+                        <span style="display:inline-block; font-size:14px; margin:0px 35px 0 10px">Or go to link:</span>
+                        <input type="text" value="" id="urlujic" name="urlujic" style="width:240px"  />    
+                        </div>
+                   	</div>
                     <div style="padding:15px;">
                         <input type="button" class="button-primary" value="Insert Countdown" onclick="InsertContdown();"/>&nbsp;&nbsp;&nbsp;
                     <a class="button" style="color:#bbb;" href="#" onclick="tb_remove(); return false;">Cancel</a>
@@ -67,6 +112,7 @@ function add_ujic_popup(){
 
         <?php
     }
+	
 function ujic_forms(){
 	global $wpdb;
 	$table_name = $wpdb->prefix ."uji_counter";
@@ -83,15 +129,39 @@ function ujic_forms(){
 
 function ujic_code( $atts, $content = null ) { 
 	global $wpdb;
+    extract(shortcode_atts(array(
+	      'id' 		=> "ujic-black",
+		  'expire'	=> "2012/12/21 01:00:00",
+		  'hide' 	=> "false",
+		  'url'		=> ""
+     ), $atts));
+	//Timezone
+	//$current_offset = (int) get_option('gmt_offset');
+	$utc = 2*(60*60);
+	echo $utc.'<br>'; 
+
+	//end Timezone
+
+	//$now_time = time();
+	$now_time = strtotime(date_i18n("Y/m/d H:i:s"))-$utc;
+	$unx_time = $expire.":00";
 	
+
+	$unx_time = strtotime($unx_time)-$utc;
+	echo ($now_time < $unx_time) ."<br>";
+	
+	
+	//echo "<br>".$expire.":00 = ".$unx_time. "<br>".date("Y/m/d H:i:s", $now_time)." = ".$now_time;
+	
+	if($hide=="true" && $now_time > $unx_time){
+		$time = $expire.":00 = ".$unx_time. "<br>".date_i18n("Y/m/d H:i:s", time())." = ".$now_time;
+		
+		
+		return 	$time.$content;
+	}else{	
 	wp_enqueue_style( 'ujiStyleCount');
 	wp_enqueue_scripts('jQuery');
 	wp_print_scripts('UJI_js_countdown');
-	
-	 extract(shortcode_atts(array(
-	      'id' 		=> "ujic-black",
-		  'expire'	=>"2012/2/21 01:00:00"
-     ), $atts));
 	 
 	$table_name = $wpdb->prefix ."uji_counter";
 	$ujic_datas = $wpdb->get_results("SELECT * FROM $table_name WHERE title = '".$id."'");
@@ -116,6 +186,7 @@ function ujic_code( $atts, $content = null ) {
 	$ujic_col_sw = !empty($ujic_col_sw) ? $ujic_col_sw : '#000000';
 	$ujic_txt = !empty($ujic_txt) ? 'true' : 'false';
 	$ujic_ani = !empty($ujic_ani) ? 'true' : 'false';
+	$ujic_url = !empty($url) ? '\''.$url.'\'' : 'false';
 
 	if($class=='center'){ $center_script = 'jQuery("#ujiCountdown").css({"width": (jQuery("#ujiCountdown").width()+5)+"px", "padding-left": "10px", "display": "block"});';} else{$center_script = '';}
 $script ='	<script type="text/javascript">
@@ -129,7 +200,7 @@ $script ='	<script type="text/javascript">
 								whichLabels: null,
 								timeSeparator: \':\', isRTL: false};
 							jQuery.countdown.setDefaults(jQuery.countdown.regional["uji"]);
-							jQuery("#ujiCountdown").countdown({until: austDay, text_size: \''.$ujic_txt_size.'\', color_down: \''.$ujic_col_dw.'\', color_up: \''.$ujic_col_up.'\', color_txt:  \''.$ujic_col_txt.'\', color_sw:  \''.$ujic_col_sw.'\',  ujic_txt: '.$ujic_txt .', animate_sec: '.$ujic_ani.'});	
+							jQuery("#ujiCountdown").countdown({until: austDay, text_size: \''.$ujic_txt_size.'\', color_down: \''.$ujic_col_dw.'\', color_up: \''.$ujic_col_up.'\', color_txt:  \''.$ujic_col_txt.'\', color_sw:  \''.$ujic_col_sw.'\',  ujic_txt: '.$ujic_txt .', animate_sec: '.$ujic_ani.', ujic_url: '.$ujic_url.'});	
 							'.$center_script.'
 							});
 							
@@ -137,6 +208,7 @@ $script ='	<script type="text/javascript">
 			</script>';
 
 	return strip_shortcodes($script.'<div id="ujiCountdown" '.$classh.'></div>'.$content);
+	}
 }  
 add_shortcode("ujicountdown", "ujic_code"); 
 
