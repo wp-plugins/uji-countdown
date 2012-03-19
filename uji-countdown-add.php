@@ -192,6 +192,13 @@ function ujic_add_new(){
             <a href="http://wpmanage.com/Contact-Us" target="_blank" id="hire">HIRE ME &#8250;</a>
         </div>
 </div>
+<div class="postbox">
+	<div class="handlediv" title="Click to toggle"><br /></div>
+        <h3 class="hndle"><span>Wordpress Theme Gallery</span></h3>
+        <div class="inside">
+           <a href="http://www.wprelease.com/" target="_blank"><img src="<?php echo UJI_PLUGIN_URL. '/images/wprelease.jpg'; ?>" style="padding-left:28px" /></a>
+        </div>
+</div>
 </div>
 <?php }
 function ujic_save_newstyle(){
