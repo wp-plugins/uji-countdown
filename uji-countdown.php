@@ -100,10 +100,10 @@ function UJI_color_js() {
 	wp_enqueue_script ('UJI_acolor_js', UJI_PLUGIN_URL . '/inc/js/admin.color.js', array('jquery'), '1.0', true);
 }
 
-////////////////////////////////////Language////////////////////////////////
+////////////////////////////////////LOCALIZATION////////////////////////////////
 
 function ujic_init() {
-  load_plugin_textdomain( 'uji-countdown', false, '/uji-countdown/languages' ); 
+  	load_plugin_textdomain( 'uji-countdown', false, '/uji-countdown/languages' ); 
 }
 add_action('init', 'ujic_init');
 
@@ -123,8 +123,8 @@ function my_UJI_menu() {
 ////////////////////////////////////INIT////////////////////////////////////////
 
 function UJI_set_links($links) {
-        array_unshift($links, '<a class="edit" href="options-general.php?page=ujic-count">Settings</a>');
-        return $links;
+   array_unshift($links, '<a class="edit" href="options-general.php?page=ujic-count">Settings</a>');
+   return $links;
 }
 
 add_filter('plugin_action_links_'.UJI_PLUGIN_BASE, 'UJI_set_links', 10, 2 );
@@ -133,21 +133,22 @@ add_filter('plugin_action_links_'.UJI_PLUGIN_BASE, 'UJI_set_links', 10, 2 );
 
 function ujic_form_button($context){
         $image_btn = UJI_PLUGIN_URL. '/images/icon.png';
-        $out = '<a href="#TB_inline?width=300&height=200&inlineId=select_countdown_form" class="thickbox" id="add_ujic" title="Add Countdown"><img src="'.$image_btn.'" alt="Add Counter" /></a>';
+        $out = '<a href="#TB_inline?width=300&height=450&inlineId=select_countdown_form" class="thickbox" id="add_ujic" title="Add Countdown"><img src="'.$image_btn.'" alt="Add Counter" /></a>';
         return $context . $out;
     }
 add_action('media_buttons_context', 'ujic_form_button');
 
 if(in_array(UJI_CURRENT_PAGE, array('post.php', 'page.php', 'page-new.php', 'post-new.php'))){
-                        add_action('admin_footer', 'add_ujic_popup');
+        add_action('admin_footer', 'add_ujic_popup');
  }
  
 ////////////////////////////////////ENQUIRE SCRIPT////////////////////////////////////////
 
 function ujic_scripts_register() {
 	wp_register_style('ujiStyleCount', UJI_PLUGIN_URL . '/css/jquery.countdown.css');
+	wp_enqueue_script('jquery');
 	wp_register_script('UJI_js_countdown', UJI_PLUGIN_URL . '/js/jquery.countdown.js', array('jquery'), '1.0', true);
 }
-add_action('init', 'ujic_scripts_register');
+add_action('wp_enqueue_scripts', 'ujic_scripts_register');
  
 ?>

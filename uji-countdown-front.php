@@ -145,7 +145,6 @@ function ujic_code( $atts, $content = null ) {
 		return 	$content;
 	}else{
 	wp_enqueue_style( 'ujiStyleCount');
-	wp_enqueue_script('jQuery');
 	wp_enqueue_script('UJI_js_countdown');
 	 
 	$table_name = $wpdb->prefix ."uji_counter";
