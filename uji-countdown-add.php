@@ -3,7 +3,7 @@
 ////////////////////////////////////ADD NEW STYLE////////////////////////////////////
 
 function sel_size($sz){
-	$ujic_txt_sz = array("Very Small"=>"15", "Small"=>"25", "Medium"=>"35", "Large"=>"45", "Very Large"=>"55");
+	$ujic_txt_sz = array("Ultra Small"=>"12", "Very Small"=>"15", "Small"=>"25", "Medium"=>"35", "Large"=>"45", "Very Large"=>"55");
 	$select = '<option value="" class="seltit"> - Select Countdown Size - </option>';
 	foreach($ujic_txt_sz as $size=>$key){
 		$sel = ((int)$key == $sz) ? ' selected="selected"' : '';
@@ -179,6 +179,20 @@ function ujic_add_new(){
 </div>
 <div class="postbox">
 	<div class="handlediv" title="Click to toggle"><br /></div>
+        <h3 class="hndle"><span>Add Countdown From Widgets</span></h3>
+        <div class="inside">
+           <img src="<?php echo UJI_PLUGIN_URL. '/images/ujic-ps2.jpg'; ?>" />
+        </div>
+</div>
+<div class="postbox">
+	<div class="handlediv" title="Click to toggle"><br /></div>
+        <h3 class="hndle"><span>Uji Countdown Premium</span></h3>
+        <div class="inside">
+           <a href="http://wpmanage.com/uji-countdown" target="_blank"><img src="<?php echo UJI_PLUGIN_URL. '/images/ujic-ps3.png'; ?>" style="padding-left:28px" /></a>
+        </div>
+</div>
+<div class="postbox">
+	<div class="handlediv" title="Click to toggle"><br /></div>
         <h3 class="hndle"><span>Support this plugin</span></h3>
         <div class="inside">
         	<div id="donate">
@@ -192,13 +206,7 @@ function ujic_add_new(){
             <a href="http://wpmanage.com/Contact-Us" target="_blank" id="hire">HIRE ME &#8250;</a>
         </div>
 </div>
-<div class="postbox">
-	<div class="handlediv" title="Click to toggle"><br /></div>
-        <h3 class="hndle"><span>Wordpress Theme Gallery</span></h3>
-        <div class="inside">
-           <a href="http://www.wprelease.com/" target="_blank"><img src="<?php echo UJI_PLUGIN_URL. '/images/wprelease.jpg'; ?>" style="padding-left:28px" /></a>
-        </div>
-</div>
+
 </div>
 <?php }
 function ujic_save_newstyle(){

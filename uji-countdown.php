@@ -3,7 +3,7 @@
 Plugin Name: Uji Countdown
 Plugin URI: http://www.wpmanage.com/uji-countdown/
 Description: HTML5 Countdown.
-Version: 1.0.5
+Version: 1.0.6
 Author: Ujog Raul
 Author URI: http://www.wpmanage.com
 
@@ -29,7 +29,7 @@ if (!defined('UJI_VERSION_KEY'))
     define('UJI_VERSION_KEY', 'UJI_version');
 
 if (!defined('UJI_VERSION_NUM'))
-    define('UJI_VERSION_NUM', '1.0.2');
+    define('UJI_VERSION_NUM', '1.0.6');
 
 ///////////////////////////////////DB///////////////////////////////////////
 
@@ -63,6 +63,10 @@ require_once(dirname( __FILE__ ) . "/uji-countdown-add.php");
 ////////////////////////////////////Front////////////////////////////////////
 
 require_once(dirname( __FILE__ ) . "/uji-countdown-front.php");
+
+////////////////////////////////////Widget//////////////////////////////////////
+
+require_once(dirname( __FILE__ ) . "/uji-countdown-widget.php");
 
 ///////////////////////////////////CSS///////////////////////////////////////
 
@@ -133,7 +137,7 @@ add_filter('plugin_action_links_'.UJI_PLUGIN_BASE, 'UJI_set_links', 10, 2 );
 
 function ujic_form_button($context){
         $image_btn = UJI_PLUGIN_URL. '/images/icon.png';
-        $out = '<a href="#TB_inline?width=300&height=450&inlineId=select_countdown_form" class="thickbox" id="add_ujic" title="Add Countdown"><img src="'.$image_btn.'" alt="Add Counter" /></a>';
+        $out = '<a href="#TB_inline?width=300&height=480&inlineId=select_countdown_form" class="thickbox" id="add_ujic" title="Add Countdown"><img src="'.$image_btn.'" alt="Add Counter" /></a>';
         return $context . $out;
     }
 add_action('media_buttons_context', 'ujic_form_button');

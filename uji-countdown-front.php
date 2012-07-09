@@ -78,6 +78,8 @@ function add_ujic_popup(){
                         <span>
                            Please select your style below to add it to your post or page.
                         </span>
+                        <p style="font-size:11px">Just one counter on page is allowed. <br>Check <a href="http://wpmanage.com/uji-countdown" target="_blank">Premium version</a> for multiple countdown timers on the same page.
+                        </p>
                     </div>
                     <div style="padding:15px 15px 0 15px;">
                     <h3 style="display:block; font-size:14px; margin-bottom:10px">Select style:</h3>
@@ -112,7 +114,7 @@ function add_ujic_popup(){
         <?php
     }
 	
-function ujic_forms(){
+function ujic_forms($sel=NULL){
 	global $wpdb;
 	$table_name = $wpdb->prefix ."uji_counter";
 	$ujic_datas = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `time` DESC");
@@ -120,9 +122,10 @@ function ujic_forms(){
 		$ujictab='';
 	foreach($ujic_datas as $ujic)
 		{
-		$ujictab .='<option value="'.$ujic->title.'"> '.$ujic->title.' </option>';
+		$select = (isset($sel) && !empty($sel) && $sel == $ujic->title ) ? ' selected="selected"' : '';	
+		$ujictab .='<option value="'.$ujic->title.'" '.$select.'> '.$ujic->title.' </option>';
 		}
-	echo $ujictab;
+	return $ujictab;
 	}
 }
 
