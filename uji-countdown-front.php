@@ -86,7 +86,7 @@ function add_ujic_popup(){
                         <select id="add_style">
                             <option value=""> Select a Style </option>
                             <?php
-                                ujic_forms();
+                               echo ujic_forms();
                             ?>
                         </select> 
                     </div>
@@ -119,7 +119,7 @@ function ujic_forms($sel=NULL){
 	$table_name = $wpdb->prefix ."uji_counter";
 	$ujic_datas = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `time` DESC");
 	if(!empty($ujic_datas)){
-		$ujictab='';
+		$select = $ujictab = '';
 	foreach($ujic_datas as $ujic)
 		{
 		$select = (isset($sel) && !empty($sel) && $sel == $ujic->title ) ? ' selected="selected"' : '';	
