@@ -188,7 +188,7 @@ function ujic_add_new(){
 	<div class="handlediv" title="Click to toggle"><br /></div>
         <h3 class="hndle"><span>Uji Countdown Premium</span></h3>
         <div class="inside">
-           <a href="http://wpmanage.com/uji-countdown" target="_blank"><img src="<?php echo UJI_PLUGIN_URL. '/images/ujic-ps3.png'; ?>" style="padding-left:28px" /></a>
+           <a href="http://www.wpmanage.com/uji-countdown" target="_blank"><img src="<?php echo UJI_PLUGIN_URL. '/images/ujic-ps3.png'; ?>" style="padding-left:28px" /></a>
         </div>
 </div>
 <div class="postbox">

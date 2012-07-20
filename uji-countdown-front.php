@@ -3,10 +3,12 @@
 ////////////////////////////////////SETTINGS////////////////////////////////////
 
 function add_ujic_popup(){
-	wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui.min.js' , array ( 'jquery' ) , '1.4' , true );
-	wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker.js' , array ( 'ujic_jquery_date_js' ) , '1.4' , true );
-	wp_register_style('ujic-jqueryui-css', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css");
-	wp_enqueue_style( 'ujic-jqueryui-css');	
+	wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui.min.js' , array ( 'jquery' ) , '1.8.21' , true );
+	wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker.js' , array ( 'ujic_jquery_date_js' ) , '1.0.1' , true );
+	wp_register_style('ujic-jqueryui-css', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css");
+	wp_enqueue_style( 'ujic-jqueryui-css');
+	wp_register_style('ujic-timer-css', UJI_PLUGIN_URL . '/inc/css/jquery-ui-timepicker-addon.css');
+	wp_enqueue_style( 'ujic-timer-css');
 	
 	  ?>
         <script>
@@ -15,7 +17,9 @@ function add_ujic_popup(){
 					timeFormat: 'hh:mm',
 					dateFormat: 'yy/mm/dd'
 					});
-					
+					jQuery('#dateujic').click(function () {
+						jQuery('#ui-datepicker-div').css("z-index", "9999999999");
+					});
 					jQuery('#urlujic').keyup(function () {
 						var value = jQuery(this).val();
 

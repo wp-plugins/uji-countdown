@@ -8,6 +8,7 @@
 
  function widget($args, $instance) {
  		extract($args);
+		$UJI_title = $instance['UJI_title'];
  		$UJI_style = $instance['UJI_style'];
 		$UJI_date = $instance['UJI_date'];
 		$UJI_exp = $instance['UJI_exp'];
@@ -20,12 +21,13 @@
 		$shtval .= (empty($UJI_exp) && !empty($UJI_link)) ? ' url = "'.$UJI_link.'"' : $shtval;
 		$shortcode = (!empty($shtval)) ? '[ujicountdown'.$shtval.']' : '';
 		
- 		if(!empty($shortcode)) echo do_shortcode($shortcode);
+ 		if(!empty($shortcode)) echo '<h3 class="widget-title">'.$UJI_title.'</h3>'.do_shortcode($shortcode);
 
  } // widget
 
  function update($new_instance, $old_instance){
  		$instance = $old_instance;
+		$instance['UJI_title'] = stripslashes($new_instance['UJI_title']);
  		$instance['UJI_style'] = stripslashes($new_instance['UJI_style']);
 		$instance['UJI_date'] = stripslashes($new_instance['UJI_date']);
 		$instance['UJI_exp'] = stripslashes($new_instance['UJI_exp']);
@@ -34,25 +36,31 @@
  	} // save
  
  function form($instance){
-  	$instance = wp_parse_args( (array) $instance, array('UJI_style'=>'', 'UJI_date'=>'', 'UJI_exp'=>'', 'UJI_countdown'=>'') );
- 		$UJI_style = htmlspecialchars($instance['UJI_style']);
+  	$instance = wp_parse_args( (array) $instance, array('UJI_title'=>'', 'UJI_style'=>'', 'UJI_date'=>'', 'UJI_exp'=>'', 'UJI_countdown'=>'') );
+ 		$UJI_title = htmlspecialchars($instance['UJI_title']);
+		$UJI_style = htmlspecialchars($instance['UJI_style']);
 		$UJI_date = htmlspecialchars($instance['UJI_date']);
 		$UJI_exp = htmlspecialchars($instance['UJI_exp']);
  		$UJI_link = htmlspecialchars($instance['UJI_link']);
 		
-		wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui.min.js' , array ( 'jquery' ) , '1.4' , true );
-		wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker.js' , array ( 'ujic_jquery_date_js' ) , '1.4' , true );
-		wp_register_style('ujic-jqueryui-css', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css");
+		wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui.min.js' , array ( 'jquery' ) , '1.8.21' , true );
+		wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker.js' , array ( 'ujic_jquery_date_js' ) , '1.0.1' , true );
+		wp_register_style('ujic-jqueryui-css', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css");
 		wp_enqueue_style( 'ujic-jqueryui-css');	
-		?>
-		 
-        <?php
+		
+			  
 		echo '<p style="font-size:11px">Just one counter on page is allowed. <br>Check <a href="http://wpmanage.com/uji-countdown" target="_blank">Premium version</a> for multiple countdown timers on the same page. <p>';
+		
+		echo '<p><label>' . 'Title:' . '</label>
+				<input type="text" value="'. $UJI_title .'" width="200px" id="'.$this->get_field_id('UJI_title').'" class="widefat" name="' . $this->get_field_name('UJI_title') . '" />
+			  </p>';
+		
 		echo '<p><label>' . 'Select your style:' . '</label>
 				 <select class="widefat" id="'.$this->get_field_id('UJI_style').'" name="'.$this->get_field_name('UJI_style').'">
                         <option value=""> Select a Style </option>'
 						.ujic_forms($UJI_style).
-						'</select></p>';		
+						'</select></p>';
+								
  		echo '<p><label>' . 'Countdown Expire In:' . '</label>
 				<input type="text" value="'. $UJI_date .'" width="200px" id="'.$this->get_field_id('UJI_date').'" class="UJI_date widefat" name="' . $this->get_field_name('UJI_date') . '" />
 			  </p>';
