@@ -4,7 +4,7 @@ Donate link: http://wpmanage.com/Uji-countdown
 Tags: countdown, counter, html5 countdown, animated countdown, countdown timer, count down, countdown clock, jQuery countdown, clock, timer
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 
 Uji Countdown - HTML5 Customizable Countdown Timer
 
@@ -46,6 +46,12 @@ WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-
 3. Front-end view
 
 == Changelog ==
+
+= 1.0.8 =
+
+* Important Fix: Get server time instead of local PC time. See same values on any GMT/UTC time zone
+* Fix p or br tag inclusion on some themes
+* Move script to separate file. More cleaner code
 
 = 1.0.7 =
 

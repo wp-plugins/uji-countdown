@@ -151,8 +151,7 @@ function ujic_code( $atts, $content = null ) {
 	if($hide=="true" && $now_time > $unx_time){
 		return 	$content;
 	}else{
-	wp_enqueue_style( 'ujiStyleCount');
-	wp_enqueue_script('UJI_js_countdown');
+	
 	 
 	$table_name = $wpdb->prefix ."uji_counter";
 	$ujic_datas = $wpdb->get_results("SELECT * FROM $table_name WHERE title = '".$id."'");
@@ -179,26 +178,39 @@ function ujic_code( $atts, $content = null ) {
 	$ujic_ani = !empty($ujic_ani) ? 'true' : 'false';
 	$ujic_url = !empty($url) ? '\''.$url.'\'' : 'false';
 
-	if($class=='center'){ $center_script = 'jQuery("#ujiCountdown").css({"width": (jQuery("#ujiCountdown").width()+5)+"px", "padding-left": "10px", "display": "block"});';} else{$center_script = '';}
-$script ='	<script type="text/javascript">
-			<!--
-						 jQuery(document).ready(function($){
-							var austDay = new Date("'.$expire.'");
-							jQuery.countdown.regional["uji"] = {
-								labels: ["'.__("Years", "uji-countdown").'", "'.__("Months", "uji-countdown").'", "'.__("Weeks", "uji-countdown").'", "'.__("Days", "uji-countdown").'", "'.__("Hours", "uji-countdown").'", "'.__("Minutes", "uji-countdown").'", "'.__("Seconds", "uji-countdown").'"],
-								labels1: ["'.__("Year", "uji-countdown").'", "'.__("Month", "uji-countdown").'", "'.__("Week", "uji-countdown").'", "'.__("Day", "uji-countdown").'", "'.__("Hour", "uji-countdown").'", "'.__("Minute", "uji-countdown").'", "'.__("Second", "uji-countdown").'"],
-								compactLabels: ["A", "L", "S", "Z"],
-								whichLabels: null,
-								timeSeparator: \':\', isRTL: false};
-							jQuery.countdown.setDefaults(jQuery.countdown.regional["uji"]);
-							jQuery("#ujiCountdown").countdown({until: austDay, text_size: \''.$ujic_txt_size.'\', color_down: \''.$ujic_col_dw.'\', color_up: \''.$ujic_col_up.'\', color_txt:  \''.$ujic_col_txt.'\', color_sw:  \''.$ujic_col_sw.'\',  ujic_txt: '.$ujic_txt .', animate_sec: '.$ujic_ani.', ujic_url: '.$ujic_url.'});	
-							'.$center_script.'
-							});
-							
-			//-->
-			</script>';
+			
+	wp_enqueue_style( 'ujiStyleCount');
+	wp_enqueue_script('UJI_js_countdown');
+	wp_localize_script('js_countdown', 'ujiCount', array( 
+						'uji_plugin'	=> UJI_PLUGIN_URL,
+						'expire' 		=> $expire,
+						'Years' 		=> __("Years", "uji-countdown"),
+						'Months' 		=> __("Months", "uji-countdown"),
+						'Weeks'			=> __("Weeks", "uji-countdown"),
+						'Days' 			=> __("Days", "uji-countdown"),
+						'Hours' 		=> __("Hours", "uji-countdown"),
+						'Minutes' 		=> __("Minutes", "uji-countdown"),
+						'Seconds' 		=> __("Seconds", "uji-countdown"),
+						'Year' 			=> __("Year", "uji-countdown"),
+						'Month' 		=> __("Month", "uji-countdown"),
+						'Week'			=> __("Week", "uji-countdown"),
+						'Day' 			=> __("Day", "uji-countdown"),
+						'Hour' 			=> __("Hour", "uji-countdown"),
+						'Minute' 		=> __("Minute", "uji-countdown"),
+						'Second' 		=> __("Second", "uji-countdown"),
+						'ujic_txt_size' => $ujic_txt_size,
+						'ujic_col_dw' 	=> $ujic_col_dw,
+						'ujic_col_up'	=> $ujic_col_up,
+						'ujic_col_txt' 	=> $ujic_col_txt,
+						'ujic_col_sw' 	=> $ujic_col_sw,
+						'ujic_txt' 		=> $ujic_txt,
+						'ujic_ani' 		=> $ujic_ani,
+						'ujic_url' 		=> $ujic_url,
+						'uji_center' 	=> $classh,
+						)); 		
+	wp_enqueue_script('js_countdown');		
 
-	return strip_shortcodes($script.'<div id="ujiCountdown" '.$classh.'></div>'.$content);
+	return strip_shortcodes('<div id="ujiCountdown" '.$classh.'></div>'.$content);
 	}
 }  
 add_shortcode("ujicountdown", "ujic_code"); 
