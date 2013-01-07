@@ -3,11 +3,11 @@
 Plugin Name: Uji Countdown
 Plugin URI: http://www.wpmanage.com/uji-countdown/
 Description: HTML5 Countdown.
-Version: 1.0.8
+Version: 1.0.9
 Author: Ujog Raul
 Author URI: http://www.wpmanage.com
 
-	Copyright (c) 2012
+	Copyright (c) 2012-2013
 */
 
 if (!defined('UJI_PLUGIN_NAME'))
@@ -29,7 +29,7 @@ if (!defined('UJI_VERSION_KEY'))
     define('UJI_VERSION_KEY', 'UJI_version');
 
 if (!defined('UJI_VERSION_NUM'))
-    define('UJI_VERSION_NUM', '1.0.6');
+    define('UJI_VERSION_NUM', '1.0.9');
 
 ///////////////////////////////////DB///////////////////////////////////////
 
@@ -152,7 +152,7 @@ function ujic_scripts_register() {
 	wp_register_style('ujiStyleCount', UJI_PLUGIN_URL . '/css/jquery.countdown.css');
 	wp_enqueue_script('jquery');
 	wp_register_script('UJI_js_countdown', UJI_PLUGIN_URL . '/js/jquery.countdown.js', array('jquery'), '1.0', true);
-	wp_register_script('js_countdown', UJI_PLUGIN_URL . '/js/countdown.js.php', array('jquery'), '1.0', true);
+	wp_register_script('js_countdown', UJI_PLUGIN_URL . '/js/countdown.js', array('jquery'), '1.0', true);
 }
 add_action('wp_enqueue_scripts', 'ujic_scripts_register');
  

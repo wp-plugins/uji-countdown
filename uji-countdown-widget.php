@@ -36,16 +36,24 @@
  	} // save
  
  function form($instance){
-  	$instance = wp_parse_args( (array) $instance, array('UJI_title'=>'', 'UJI_style'=>'', 'UJI_date'=>'', 'UJI_exp'=>'', 'UJI_countdown'=>'') );
+  	$instance = wp_parse_args( (array) $instance, array('UJI_title'=>'', 'UJI_style'=>'', 'UJI_date'=>'', 'UJI_exp'=>'', 'UJI_link'=>'') );
  		$UJI_title = htmlspecialchars($instance['UJI_title']);
 		$UJI_style = htmlspecialchars($instance['UJI_style']);
 		$UJI_date = htmlspecialchars($instance['UJI_date']);
 		$UJI_exp = htmlspecialchars($instance['UJI_exp']);
- 		$UJI_link = htmlspecialchars($instance['UJI_link']);
+ 		$UJI_link = (isset($UJI_link)) ? htmlspecialchars($instance['UJI_link']) : '';
 		
-		wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui.min.js' , array ( 'jquery' ) , '1.8.21' , true );
-		wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker.js' , array ( 'ujic_jquery_date_js' ) , '1.0.1' , true );
-		wp_register_style('ujic-jqueryui-css', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css");
+		
+		global $wp_version;
+		if ( $wp_version >= 3.5 ) {
+			wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui.min.js' , array ( 'jquery' ) , '1.9.1' , true );
+			wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker.js' , array ( 'ujic_jquery_date_js' ) , '1.1.1' , true );
+		}else{
+			wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-old.min.js' , array ( 'jquery' ) , '1.8' , true );
+			wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker-old.js' , array ( 'ujic_jquery_date_js' ) , '1.0.1' , true );
+		}
+		wp_enqueue_script ( 'ujic_widget_js' ,  UJI_PLUGIN_URL . '/inc/js/widget-js.js' , array ( 'jquery' ) , '1.0');
+		wp_register_style('ujic-jqueryui-css', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery-ui.css");
 		wp_enqueue_style( 'ujic-jqueryui-css');	
 		
 			  
@@ -89,7 +97,7 @@
 						var value = jQuery(this).val();
 						var cname = jQuery(this).parent().parent().find('.ujic_exp').attr("name");
 						jQuery(this).parent().parent().find('.ujic_exp').css('border', 'red');
-						//alert(cname);
+						//alert("ccc");
 						
 						if(value){	
 							jQuery('input[name="'+cname+'"]').attr('checked', false);
