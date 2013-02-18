@@ -20,7 +20,7 @@ function add_ujic_popup(){
         <script>
 			jQuery(function() {
 					jQuery('#dateujic').datetimepicker({
-					timeFormat: 'hh:mm',
+					timeFormat: 'HH:mm',
 					dateFormat: 'yy/mm/dd'
 					});
 					jQuery("#ui-datepicker-div").wrap('<div id="ujicountdownadd" />');

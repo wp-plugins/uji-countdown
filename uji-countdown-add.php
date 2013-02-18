@@ -172,6 +172,13 @@ function ujic_add_new(){
 <div class="metabox-holder">
 <div class="postbox">
 	<div class="handlediv" title="Click to toggle"><br /></div>
+        <h3 class="hndle"><span>Uji Countdown Premium</span></h3>
+        <div class="inside">
+           <a href="http://www.wpmanage.com/uji-countdown" target="_blank"><img src="<?php echo UJI_PLUGIN_URL. '/images/ujic-ps3.png'; ?>" style="padding-left:28px" /></a>
+        </div>
+</div>
+<div class="postbox">
+	<div class="handlediv" title="Click to toggle"><br /></div>
         <h3 class="hndle"><span>Add Countdown in Post or Page</span></h3>
         <div class="inside">
            <img src="<?php echo UJI_PLUGIN_URL. '/images/ujic-ps.jpg'; ?>" />
@@ -182,28 +189,6 @@ function ujic_add_new(){
         <h3 class="hndle"><span>Add Countdown From Widgets</span></h3>
         <div class="inside">
            <img src="<?php echo UJI_PLUGIN_URL. '/images/ujic-ps2.jpg'; ?>" />
-        </div>
-</div>
-<div class="postbox">
-	<div class="handlediv" title="Click to toggle"><br /></div>
-        <h3 class="hndle"><span>Uji Countdown Premium</span></h3>
-        <div class="inside">
-           <a href="http://www.wpmanage.com/uji-countdown" target="_blank"><img src="<?php echo UJI_PLUGIN_URL. '/images/ujic-ps3.png'; ?>" style="padding-left:28px" /></a>
-        </div>
-</div>
-<div class="postbox">
-	<div class="handlediv" title="Click to toggle"><br /></div>
-        <h3 class="hndle"><span>Support this plugin</span></h3>
-        <div class="inside">
-        	<div id="donate">
-           <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="BHFJEZ6CFKSAJ">
-            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-            </form>
-			</div>
-            <a href="http://wpmanage.com/Contact-Us" target="_blank" id="hire">HIRE ME &#8250;</a>
         </div>
 </div>
 
