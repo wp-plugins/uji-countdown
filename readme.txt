@@ -3,8 +3,8 @@ Contributors: ujimoto
 Donate link: http://wpmanage.com/Uji-countdown
 Tags: countdown, counter, html5 countdown, animated countdown, countdown timer, count down, countdown clock, jQuery countdown, clock, timer
 Requires at least: 3.0
-Tested up to: 3.5.1
-Stable tag: 1.1
+Tested up to: 3.6 beta
+Stable tag: 1.2
 
 Uji Countdown - HTML5 Customizable Countdown Timer
 
