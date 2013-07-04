@@ -47,6 +47,10 @@ WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-
 
 == Changelog ==
 
+= 1.2 =
+
+* Fix jQuery UI for wordpress 3.6
+
 = 1.1 =
 
 * Fix Chrome bug

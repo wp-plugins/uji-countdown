@@ -46,8 +46,8 @@
 		
 		global $wp_version;
 		if ( $wp_version >= 3.5 ) {
-			wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui.min.js' , array ( 'jquery' ) , '1.9.1' , true );
-			wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker.js' , array ( 'ujic_jquery_date_js' ) , '1.1.1' , true );
+			wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui.min.js' , array ( 'jquery' ) , '1.10.3' , true );
+			wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker.js' , array ( 'ujic_jquery_date_js' ) , '1.3' , true );
 		}else{
 			wp_enqueue_script ( 'ujic_jquery_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-old.min.js' , array ( 'jquery' ) , '1.8' , true );
 			wp_enqueue_script ( 'ujic_date_js' ,  UJI_PLUGIN_URL . '/inc/js/jquery-ui-timepicker-old.js' , array ( 'ujic_jquery_date_js' ) , '1.0.1' , true );
@@ -87,7 +87,7 @@
 				
 				jQuery('.UJI_date').each(function() {
 					jQuery(this).datetimepicker({
-					timeFormat: 'HH:mm',
+					timeFormat: 'hh:mm',
 					dateFormat: 'yy/mm/dd'
 					});
 				});		
