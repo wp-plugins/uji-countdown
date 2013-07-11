@@ -87,7 +87,7 @@
 				
 				jQuery('.UJI_date').each(function() {
 					jQuery(this).datetimepicker({
-					timeFormat: 'hh:mm',
+					timeFormat: 'HH:mm',
 					dateFormat: 'yy/mm/dd'
 					});
 				});		
