@@ -8,10 +8,11 @@
 	margin-left: 20px!important;
 }
 .cancel{
-	padding: 5px 10px 4px 10px!important;
 	float: left;
-	display: inline;
+	display: inline-block!important;
+    margin-left: 4px!important;
 }
+
 .widefat{
 	width: 525px;
 }
@@ -38,11 +39,21 @@
   	display: block;
   	overflow: hidden;
 	margin-bottom: 10px;
+    font-size: 12px;
 }
+
+#ujic-add input[type="checkbox"], 
+#ujic-add input[type="radio"] {
+    margin: 2px 0 0 0 !important;
+    width: 13px!important;
+    height: 13px!important;
+}
+
   #ujic-add label{
   	float: left;
   	width: 160px;
   	font-weight: bold;
+    font-size: 12px;
 }
   #ujic-add input{
   display: inline;
@@ -62,7 +73,7 @@
 }
 #ujic-add #ujic_col_dw, #ujic-add #ujic_col_up, #ujic-add #ujic_col_txt, #ujic-add #ujic_col_sw{
 	margin: 10px 0 0 10px;
-	width: 70px;
+	width: 80px;
 }
 #uji_pos_0, #uji_pos_1, #uji_pos_2, #uji_pos_3{
 	display: inline-block;
