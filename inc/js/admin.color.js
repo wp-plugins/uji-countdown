@@ -15,13 +15,14 @@ if ( jQuery().ColorPicker && jQuery( '#ujic_col_dw, #ujic_col_up' ).length ) {
 						jQuery('#colorSelector div').css('backgroundColor', '#' + hex);
 						jQuery( '#ujic_col_dw' ).attr( 'value', '#' + hex );
 						var color_up = jQuery( '#ujic_col_up' ).val();
-			
-						jQuery( '.countdown_amount').css("background-image", "linear-gradient(bottom, #"+hex+" 50%, "+color_up+" 50%)");
-						jQuery( '.countdown_amount').css("background-image", "-o-linear-gradient(bottom, #"+hex+" 50%, "+color_up+" 50%)");
-						jQuery( '.countdown_amount').css("background-image", "-moz-linear-gradient(bottom, #"+hex+" 50%, "+color_up+" 50%)");
-						jQuery( '.countdown_amount').css("background-image", "-webkit-linear-gradient(bottom, #"+hex+" 50%, "+color_up+" 50%)");
-						jQuery( '.countdown_amount').css("background-image", "-ms-linear-gradient(bottom, #"+hex+" 50%, "+color_up+" 50%)");
-						jQuery( '.countdown_amount').css("filter", "progid:DXImageTransform.Microsoft.Gradient(startColorstr='#"+hex+"', endColorstr='"+color_up+"')");					
+			            hex = "#"+hex;
+						jQuery( '.countdown_amount').css("background", "-moz-linear-gradient(top,  "+color_up+" 50%, "+hex+" 50%)"); /* FF3.6+ */
+                        jQuery( '.countdown_amount').css("background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,"+color_up+"), color-stop(50%,"+hex+"))"); /* Chrome,Safari4+ */
+                        jQuery( '.countdown_amount').css("background", "-webkit-linear-gradient(top,  "+color_up+" 50%,"+hex+" 50%)"); /* Chrome10+,Safari5.1+ */
+                        jQuery( '.countdown_amount').css("background", "-o-linear-gradient(top,  "+color_up+" 50%,"+hex+" 50%)"); /* Opera 11.10+ */
+                        jQuery( '.countdown_amount').css("background", "-ms-linear-gradient(top,  "+color_up+" 50%,"+hex+" 50%)"); /* IE10+ */
+                        jQuery( '.countdown_amount').css("background", "linear-gradient(to bottom,  "+color_up+" 50%,"+hex+" 50%)"); /* W3C */
+                        jQuery( '.countdown_amount').css("filter", "progid:DXImageTransform.Microsoft.gradient( startColorstr='"+color_up+"', endColorstr='"+hex+"',GradientType=0 )"); /* IE6-9 */				
 						
 					}
 	 });
@@ -40,13 +41,14 @@ if ( jQuery().ColorPicker && jQuery( '#ujic_col_dw, #ujic_col_up' ).length ) {
 						jQuery('#colorSelector2 div').css('backgroundColor', '#' + hex);
 						jQuery( '#ujic_col_up' ).attr( 'value', '#' + hex );
 						var color_down = jQuery( '#ujic_col_dw' ).val();
-			
-						jQuery( '.countdown_amount').css("background-image", "linear-gradient(bottom, "+color_down+" 50%, #"+hex+" 50%)");
-						jQuery( '.countdown_amount').css("background-image", "-o-linear-gradient(bottom, "+color_down+" 50%, #"+hex+" 50%)");
-						jQuery( '.countdown_amount').css("background-image", "-moz-linear-gradient(bottom, "+color_down+" 50%, #"+hex+" 50%)");
-						jQuery( '.countdown_amount').css("background-image", "-webkit-linear-gradient(bottom, "+color_down+" 50%, #"+hex+" 50%)");
-						jQuery( '.countdown_amount').css("background-image", "-ms-linear-gradient(bottom, "+color_down+" 50%, #"+hex+" 50%)");
-						jQuery( '.countdown_amount').css("filter", "progid:DXImageTransform.Microsoft.Gradient(startColorstr='"+color_down+"', endColorstr='#"+hex+"')");
+			            hex = "#"+hex;
+						jQuery( '.countdown_amount').css("background", "-moz-linear-gradient(top,  "+hex+" 50%, "+color_down+" 50%)"); /* FF3.6+ */
+                        jQuery( '.countdown_amount').css("background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,"+hex+"), color-stop(50%,"+color_down+"))"); /* Chrome,Safari4+ */
+                        jQuery( '.countdown_amount').css("background", "-webkit-linear-gradient(top,  "+hex+" 50%,"+color_down+" 50%)"); /* Chrome10+,Safari5.1+ */
+                        jQuery( '.countdown_amount').css("background", "-o-linear-gradient(top,  "+hex+" 50%,"+color_down+" 50%)"); /* Opera 11.10+ */
+                        jQuery( '.countdown_amount').css("background", "-ms-linear-gradient(top,  "+hex+" 50%,"+color_down+" 50%)"); /* IE10+ */
+                        jQuery( '.countdown_amount').css("background", "linear-gradient(to bottom,  "+hex+" 50%,"+color_down+" 50%)"); /* W3C */
+                        jQuery( '.countdown_amount').css("filter", "progid:DXImageTransform.Microsoft.gradient( startColorstr='"+hex+"', endColorstr='"+color_down+"',GradientType=0 )"); /* IE6-9 */
 					}
 	 });
 	 var color3 = jQuery('#ujic_col_txt' ).val();

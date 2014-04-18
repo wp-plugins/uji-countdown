@@ -3,8 +3,8 @@ Contributors: ujimoto
 Donate link: http://wpmanage.com/Uji-countdown
 Tags: countdown, counter, html5 countdown, animated countdown, countdown timer, count down, countdown clock, jQuery countdown, clock, timer
 Requires at least: 3.0
-Tested up to: 3.8
-Stable tag: 1.3.2
+Tested up to: 3.9
+Stable tag: 1.3.3
 
 Uji Countdown - HTML5 Customizable Countdown Timer
 
@@ -46,6 +46,10 @@ WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-
 3. Front-end view
 
 == Changelog ==
+
+= 1.3.3 =
+* Important Fix: WP 3.9 color picker compatibility with jquery 1.10+
+* Important Fix: WP 3.9 compatibility
 
 = 1.3.2 =
 
