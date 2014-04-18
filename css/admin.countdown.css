@@ -1,0 +1,120 @@
+/* Uji Countdown:
+ * Copyright (c) 2012 Ujimoto
+ * Project      : http://wpmanage.com/uji-countdown
+ */
+.error, .updated{
+	width: 535px;
+	padding: 5px!important;
+	margin-left: 20px!important;
+}
+.cancel{
+	float: left;
+	display: inline-block!important;
+    margin-left: 4px!important;
+}
+
+.widefat{
+	width: 525px;
+}
+.wrap h2 {
+	background: transparent url(../images/icon_large.png) 0 8px no-repeat;
+	text-indent: 38px;
+}
+.ujic-update{
+ 	background-color: #fffadb!important;
+}
+#ujic-add{
+ 	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
+ 	background-color: #eeeeee;
+ 	width: 500px;
+ 	padding: 10px;
+ 	overflow: hidden;
+ 	border: 1px solid #c2c2c2;
+ 	margin-bottom: 10px;
+ }
+#ujic-add div{
+  	display: block;
+  	overflow: hidden;
+	margin-bottom: 10px;
+    font-size: 12px;
+}
+
+#ujic-add input[type="checkbox"], 
+#ujic-add input[type="radio"] {
+    margin: 2px 0 0 0 !important;
+    width: 13px!important;
+    height: 13px!important;
+}
+
+  #ujic-add label{
+  	float: left;
+  	width: 160px;
+  	font-weight: bold;
+    font-size: 12px;
+}
+  #ujic-add input{
+  display: inline;
+	float: left;
+}
+#ujic-add small{
+	margin-left: 5px;
+}
+#ujic-add .fleft{
+ 	float: left;
+ 	display: inline-block;
+ 	margin-right: 30px;
+}
+#ujic-add .fleft span{
+  	display: block;
+ 	margin-bottom: 5px;
+}
+#ujic-add #ujic_col_dw, #ujic-add #ujic_col_up, #ujic-add #ujic_col_txt, #ujic-add #ujic_col_sw{
+	margin: 10px 0 0 10px;
+	width: 80px;
+}
+#uji_pos_0, #uji_pos_1, #uji_pos_2, #uji_pos_3{
+	display: inline-block;
+	margin: 0 6px 0 6px;
+	float: left;
+	padding-left: 25px;
+}
+#uji_pos_0{
+	background: url(../images/align-none.png) top left no-repeat;
+}
+#uji_pos_1{
+	background: url(../images/align-left.png) top left no-repeat;
+}
+#uji_pos_2{
+	background: url(../images/align-center.png) top left no-repeat;
+}
+#uji_pos_3{
+	background: url(../images/align-right.png) top left no-repeat;
+}
+/*----------Preview--------------*/
+#ujic-pre{
+ 	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
+ 	background-color: #fff;
+ 	width: 500px;
+ 	padding: 10px;
+ 	border: 1px solid #c2c2c2;
+ 	overflow: hidden;
+}	
+#ujic_box, .metabox-holder{
+	float: left;
+	display: inline;
+}
+.metabox-holder{
+	margin: 0 0 0 20px;
+}
+#donate{
+	margin-left: 50px;
+}
+#hire{
+	margin-left: 95px;
+}
