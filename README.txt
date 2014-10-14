@@ -38,6 +38,8 @@ WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-
 3. Create your new Countdown style in Settings/Countdown
 4. Place your Countdown in Post/Page via Edit: Post or Page
 
+== Changelog ==
+
 = 2.0 =
 
 * Complete core rebuilt.
