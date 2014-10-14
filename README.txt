@@ -1,4 +1,4 @@
-=== Uji Countdown 2.0 ===
+=== Uji Countdown ===
 Contributors: ujimoto
 Donate link: http://www.wpmanage.com/uji-countdown
 Tags: countdown, counter, html5 countdown, animated countdown, countdown timer, count down, countdown clock, jQuery countdown, clock, timer
