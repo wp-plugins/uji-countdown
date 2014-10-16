@@ -40,6 +40,9 @@ WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-
 
 == Changelog ==
 
+= 2.0.1 =
+* Fix select style option.
+
 = 2.0 =
 
 * Complete core rebuilt.

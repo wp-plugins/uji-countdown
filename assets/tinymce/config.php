@@ -7,7 +7,7 @@
 // GET All Styles
 function ujic_get_styles( $desc = false ){
 	global $wpdb;
-	$ujic_styles = $wpdb->get_results( "SELECT style, title FROM wp_uji_counter ORDER BY `time` DESC" );
+	$ujic_styles = $wpdb->get_results( "SELECT style, title FROM " . $wpdb->prefix . "uji_counter ORDER BY `time` DESC" );
 	$ujic_sel = array();
 	if( !empty($ujic_styles) ){
       if( $desc ){
