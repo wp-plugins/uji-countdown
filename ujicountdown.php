@@ -10,7 +10,7 @@
  * Plugin Name: Uji Countdown
  * Plugin URI: http://wpmanage.com/uji-countdown
  * Description: HTML5 Countdown.
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Wpmanage
  * Author URI: http://wpmanage.com
  * Text Domain: uji-countdown

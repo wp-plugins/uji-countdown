@@ -137,9 +137,10 @@ class UjiCountdown extends Uji_Countdown {
                 'ujic_y' => $ujic_y, //Secondary format: Years
                 'ujic_o' => $ujic_o, //Secondary format: Months
                 'ujic_w' => $ujic_w, //Secondary format: Weeks
-                'uji_time' => date_i18n( 'M j, Y H:i:s ' ) . "+0000",
+                'uji_time' => date_i18n( 'M j, Y H:i:s O' ),
                 'uji_hide' => ($hide == "true") ? 'true' : 'false',
-                'ujic_rtl' => ( $this->ujic_get_option('ujic_rtl') ) ? $this->ujic_get_option('ujic_rtl')  : false
+                'ujic_rtl' => ( $this->ujic_get_option('ujic_rtl') ) ? $this->ujic_get_option('ujic_rtl')  : false,
+                'uji_utime' => ( $this->ujic_get_option('ujic_utime') ) ? $this->ujic_get_option('ujic_utime')  : false
             ) );
 
             wp_enqueue_script( $this->plugin_slug . '-init' );

@@ -654,7 +654,7 @@ class Uji_Countdown_Admin {
 
       //Build Forms
       $cnt  = '<form method="post" action="options-general.php?page=uji-countdown&tab=tab_ujic_set&saveset=true">';
-      
+      $cnt .= $this->cform_checkbox( __( "Enable user time:", $this->plugin_slug ), array( 'ujic_utime' ), array( __("Timer based on the users system time not the server time.<br> Don't enable it if you need the same time for any timezone!<br><strong>Default is the server time!</strong>", $this->plugin_slug ) ), array( ( isset($vars['ujic_utime']) ? $vars['ujic_utime'] : false ) ) );
       $cnt .= $this->cform_checkbox( __( "Right-To-Left (RTL):", $this->plugin_slug ), array( 'ujic_rtl' ), array( __("Writing starts from the right of the page and continues to the left.", $this->plugin_slug ) ), array( ( isset($vars['ujic_rtl']) ? $vars['ujic_rtl'] : false ) ) );
       $cnt .=  $this->cform_title( __( "Quick Translation", $this->plugin_slug ) );
       

@@ -337,7 +337,7 @@ class Uji_Countdown extends Uji_Countdown_Admin {
     private function upgrade_db() {
         global $wpdb;
         
-       if ( ! $wpdb->get_var( "SHOW COLUMNS FROM " . self::ujic_tab_name() . " LIKE 'options'" ) ) {
+       if( $wpdb->get_var("SHOW TABLES LIKE '" . self::ujic_tab_name()."'") === $wpdb->prefix . self::ujic_tab_name() ) {
           
          // Create DB
           self::create_ujic_db();
