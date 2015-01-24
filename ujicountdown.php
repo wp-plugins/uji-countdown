@@ -1,21 +1,16 @@
 <?php
-/**
- * @package   Uji Countdown
- * @author    Wpmanage <info@wpmanage.com>
- * @license   Free
- * @link      http://wpmanage.com/uji-countdown
- * @copyright 2014 WPmanage.com
- *
- * @wordpress-plugin
- * Plugin Name: Uji Countdown
- * Plugin URI: http://wpmanage.com/uji-countdown
- * Description: HTML5 Customizable Countdown.
- * Version: 2.0.3
- * Author: Wpmanage
- * Author URI: http://wpmanage.com
- * Text Domain: uji-countdown
- * License: GPL-2.0+
- * Domain Path: /lang
+/*
+Plugin Name: Uji Countdown
+Plugin URI: http://www.wpmanage.com/uji-countdown
+Description: HTML5 Customizable Countdown.
+Version: 2.0.3
+Text Domain: uji-countdown
+Domain Path: /lang
+Author: Wpmanage.com
+Author URI: http://wpmanage.com
+Network: True
+License: GPLv2
+Copyright 2015  WPmanage  (email : info@wpmanage.com)
 */
 
 // If this file is called directly, abort.
