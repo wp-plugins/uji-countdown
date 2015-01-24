@@ -1,13 +1,5 @@
 <?php
-/**
- *
- * Plugin Name: Uji Countdown Premium Plus 2.0 
- * Plugin URI: http://www.wpmanage.com/uji-countdown/
- * Description: HTML5 Countdown.
- * Version: 2.0
- * Author: WPmanage <info@wpmanage.com>
- * Author URI: http://www.wpmanage.com
- */
+
 if ( !defined( 'ABSPATH' ) )
    exit; // Exit if accessed directly
 
