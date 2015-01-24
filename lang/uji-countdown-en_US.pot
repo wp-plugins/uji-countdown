@@ -1,0 +1,406 @@
+# Copyright (C) 2013 TODO
+# This file is distributed under the same license as the TODO package.
+msgid ""
+msgstr ""
+"Project-Id-Version: TODO 1.0.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/byecaptcha\n"
+"POT-Creation-Date: 2014-09-24 09:18-0800\n"
+"PO-Revision-Date: 2014-09-24 09:18-0800\n"
+"Last-Translator: FULL NAME <email@example.com>\n"
+"Language-Team: LANGUAGE <translations@example.com >\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;"
+"esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: assets/tinymce/config.php:25
+msgid "Please add a new style first"
+msgstr ""
+
+#: assets/tinymce/config.php:45
+msgid "Select Style"
+msgstr ""
+
+#: assets/tinymce/config.php:46
+msgid "Select the style for your countdown"
+msgstr ""
+
+#: assets/tinymce/config.php:53
+msgid "Expire Date"
+msgstr ""
+
+#: assets/tinymce/config.php:54
+msgid "Select the date to expire"
+msgstr ""
+
+#: assets/tinymce/config.php:58
+msgid "Time"
+msgstr ""
+
+#: assets/tinymce/config.php:59
+msgid "Select the time to expire"
+msgstr ""
+
+#: assets/tinymce/config.php:68
+msgid "Hide the countdown: "
+msgstr ""
+
+#: assets/tinymce/config.php:69
+msgid "Or go to URL: "
+msgstr ""
+
+#: assets/tinymce/config.php:70
+msgid "After Expiry"
+msgstr ""
+
+#: assets/tinymce/config.php:71
+msgid "Select option after expiry"
+msgstr ""
+
+#: assets/tinymce/config.php:75
+msgid "Insert Countdown Shortcode"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:61
+msgid "Date"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:62
+msgid "Name"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:63
+msgid "Style"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:64
+msgid "Change"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:67
+#: classes/class-uji-countdown-admin.php:88
+msgid "Create a new timer style"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:119
+msgid "Timer Title:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:120
+msgid "Google Font:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:121
+msgid "Alignment:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:121
+msgid "None"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:121
+msgid "Left"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:121
+msgid "Center"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:121
+msgid "Right"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:122
+msgid "Main format:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:122
+#: classes/class-uji-countdown-admin.php:227
+#: classes/class-uji-countdown-front.php:125
+msgid "Days"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:122
+#: classes/class-uji-countdown-admin.php:232
+#: classes/class-uji-countdown-front.php:127
+msgid "Hours"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:122
+#: classes/class-uji-countdown-admin.php:237
+#: classes/class-uji-countdown-front.php:129
+msgid "Minutes"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:122
+#: classes/class-uji-countdown-admin.php:242
+#: classes/class-uji-countdown-front.php:131
+msgid "Seconds"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:123
+msgid "Secondary format:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:123
+#: classes/class-uji-countdown-admin.php:212
+#: classes/class-uji-countdown-front.php:119
+msgid "Years"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:123
+#: classes/class-uji-countdown-admin.php:217
+#: classes/class-uji-countdown-front.php:121
+msgid "Months"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:123
+#: classes/class-uji-countdown-admin.php:222
+#: classes/class-uji-countdown-front.php:123
+msgid "Weeks"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:125
+msgid "Animation for seconds:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:126
+msgid "Display time label text:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:128
+#: classes/class-uji-countdown-admin.php:130
+msgid "Timer Size:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:132
+msgid "Select Box Color:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:132
+msgid "Bottom"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:132
+msgid "Up"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:134
+msgid "Select Line Color:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:134
+msgid "Background"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:134
+msgid "Line"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:136
+msgid "Thickness:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:138
+#: classes/class-uji-countdown-admin.php:140
+msgid "Text Color:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:138
+#: classes/class-uji-countdown-admin.php:140
+msgid "Number Color"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:138
+msgid "Shadow Color"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:141
+msgid "Label Color:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:141
+msgid "Label Text Color"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:142
+msgid "Label Size:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:147
+msgid "Edit Timer Style"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:149
+msgid "Create New Timer Style"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:253
+msgid "Preview Timer Style"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:264
+msgid "How To Add Countdown Shortcode"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:264
+msgid "Add New Countdown <br>from the Widget Areas"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:276
+msgid "Style Type:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:279
+msgid "Select Style:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:425
+msgid "Update Style"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:427
+msgid "Cancel Add New"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:429
+msgid "Save Style"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:462
+msgid "Your Timer Style Was Created"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:469
+msgid "Your Timer Style Was Updated"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:485
+msgid "Please Complete Timer Title"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:490
+msgid "Please Select Timer Format"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:497
+msgid "This Name Already Exist. Please Change Timer Name.  <br/>"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:556
+msgid "Your countdown style was deleted"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:617
+msgid "Show Responsive:"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:617
+msgid "For Tablet and Mobile devices."
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:618
+msgid "Right-To-Left (RTL):"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:618
+msgid "Writing starts from the right of the page and continues to the left."
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:619
+msgid "Quick Translation"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:624
+msgid ":"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:626
+msgid "Save Changes"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:630
+msgid "Timer Settings"
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:643
+msgid "Settings saved."
+msgstr ""
+
+#: classes/class-uji-countdown-admin.php:645
+msgid "Some error occured. Please try again."
+msgstr ""
+
+#: classes/class-uji-countdown-front.php:120
+msgid "Year"
+msgstr ""
+
+#: classes/class-uji-countdown-front.php:122
+msgid "Month"
+msgstr ""
+
+#: classes/class-uji-countdown-front.php:124
+msgid "Week"
+msgstr ""
+
+#: classes/class-uji-countdown-front.php:126
+msgid "Day"
+msgstr ""
+
+#: classes/class-uji-countdown-front.php:128
+msgid "Hour"
+msgstr ""
+
+#: classes/class-uji-countdown-front.php:130
+msgid "Minute"
+msgstr ""
+
+#: classes/class-uji-countdown-front.php:132
+msgid "Second"
+msgstr ""
+
+#: classes/class-uji-countdown.php:198 views/admin.php:29
+msgid "Settings"
+msgstr ""
+
+#: classes/class-uji-widget.php:176
+msgid "Title (optional):"
+msgstr ""
+
+#: classes/class-uji-widget.php:185
+msgid "Select a Style:"
+msgstr ""
+
+#: classes/class-uji-widget.php:202
+msgid "Expire Date:"
+msgstr ""
+
+#: classes/class-uji-widget.php:208
+msgid "Select the Time:"
+msgstr ""
+
+#: classes/class-uji-widget.php:232
+msgid "Hide Countdown:"
+msgstr ""
+
+#: classes/class-uji-widget.php:238
+msgid "Or go to this link:"
+msgstr ""
+
+#: classes/class-uji-widget.php:239
+msgid "Select URL to send after expire"
+msgstr ""
+
+#: views/admin.php:27
+msgid "My Countdowns"
+msgstr ""
+
+#: views/admin.php:28
+msgid "Add/Edit Countdown"
+msgstr ""
