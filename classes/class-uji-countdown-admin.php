@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * Plugin Name: Uji Countdown Premium Plus 2.0 
