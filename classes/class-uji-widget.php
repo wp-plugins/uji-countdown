@@ -112,12 +112,14 @@ class ujic_Widget extends WP_Widget {
       $minut = isset( $instance['UJI_minutes'] ) ? $instance['UJI_minutes'] : false;
       $hide = isset( $instance['UJI_hide'] ) ? $instance['UJI_hide'] : false;
       $url = isset( $instance['UJI_url'] ) ? $instance['UJI_url'] : false;
+      $subscr = isset( $instance['UJI_subscr'] ) ? $instance['UJI_subscr'] : false;
 
       $shtval = '';
       $shtval .= (!empty( $name ) ) ? ' id="' . $name . '"' : $shtval;
       $shtval .= (!empty( $date ) ) ? ' expire="' . $date . ' ' . $hour . ':' . $minut . '"' : $shtval;
       $shtval .= (!empty( $hide ) ) ? ' hide = "true"' : $shtval;
       $shtval .= ( empty( $hide ) && !empty( $url ) ) ? ' url = "' . $url . '"' : $shtval;
+      $shtval .= ( empty( $subscr ) ) ? ' subscr = "' . trim($subscr) . '"' : $shtval;
     
       $shortcode = (!empty( $shtval ) ) ? '[ujicountdown' . $shtval . ']' : '';
 
@@ -146,6 +148,7 @@ class ujic_Widget extends WP_Widget {
       $instance['UJI_minutes'] = strip_tags( $new_instance['UJI_minutes'] );
       $instance['UJI_hide'] = strip_tags( $new_instance['UJI_hide'] );
       $instance['UJI_url'] = strip_tags( $new_instance['UJI_url'] );
+      $instance['UJI_subscr'] = strip_tags( $new_instance['UJI_subscr'] );
 
       return $instance;
    }
@@ -166,7 +169,8 @@ class ujic_Widget extends WP_Widget {
           'UJI_hours' => 23,
           'UJI_minutes' => 59,
           'UJI_hide' => '',
-          'UJI_url' => ''
+          'UJI_url' => '',
+          'UJI_subscr' => ''
       );
 
       $instance = wp_parse_args( (array) $instance, $defaults );
@@ -241,6 +245,12 @@ class ujic_Widget extends WP_Widget {
          <label for="<?php echo $this->get_field_id( 'UJI_url' ); ?>"><?php _e( 'Or go to this link:', $this->plugin_slug ); ?></label><br />
          <small><?php _e( 'Select URL to send after expire', $this->plugin_slug ); ?></small>
          <input class="widefat ujic_link" id="<?php echo $this->get_field_id( 'UJI_url' ); ?>" name="<?php echo $this->get_field_name( 'UJI_url' ); ?>" type="text" value="<?php echo $instance['UJI_url']; ?>" />
+      </p>
+      
+       <!-- Widget Campaign name -->
+      <p>
+         <label for="<?php echo $this->get_field_id( 'UJI_subscr' ); ?>"><?php _e( 'Campaign Name:', $this->plugin_slug ); ?></label><br />
+         <input class="widefat ujic_subscr" id="<?php echo $this->get_field_id( 'UJI_subscr' ); ?>" name="<?php echo $this->get_field_name( 'UJI_subscr' ); ?>" type="text" value="<?php echo $instance['UJI_subscr']; ?>" />
       </p>
 
       <?php

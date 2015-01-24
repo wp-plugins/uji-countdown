@@ -85,6 +85,119 @@
 }
 
 
+/******************** Newsletter *************/
+.ujicf:before, .ujicf:after { content: ""; display: table; }
+.ujicf:after { clear: both; }
+.ujicf { *zoom: 1; }
+
+#ujiCountdown
+{
+    display:inline-block;
+    margin-bottom:0;
+}
+
+#ujiCountdown span.countdown_row
+{
+    display:block;
+}
+
+#ujiCountdown span.ujic_s
+{
+    margin-right: 0;
+}
+
+#uji-wrapper
+{
+    display:inline-block;
+    margin: 0 auto;
+}
+
+.ujic-hold form
+{
+    display:block;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.ujic-hold form span
+{
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.1em;
+    margin: 1em 0;
+    text-align: center;
+}
+
+.ujic-hold form p
+{
+    width:100%;
+    display: inline-block;
+    margin: 0 auto !important;
+    text-align: center;
+}
+
+.ujic-hold form input
+{
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 30px !important;
+}
+
+.ujic-hold form div
+{
+    text-align: center;
+}
+
+.ujic-hold form input[type="text"]
+{
+    background: none repeat scroll 0 0 #fff;
+    border: medium none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    border-radius: 3px 0 0 3px;
+    font-size: 13px;
+    margin: 0;
+    padding: 0px 5%;
+    text-align: center;
+    width: 70%;
+    float:left;
+}
+
+.ujic-hold form input[type="submit"]
+{
+    border-radius: 0 3px 3px 0;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0 3%;
+    text-transform: uppercase;
+    width: 30%;
+    border: medium none;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    color: #fff;
+    background: linear-gradient(to bottom , #c816d0, #ab02b2) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float:left;
+}
+.ujic-hold form span.uji-msg-err
+{
+    color:#CE0000;
+}
+.ujic-hold form span.uji-msg-ok
+{
+    color:green;
+}
+
+.ujic-hold form div span
+{
+    display: none;
+    line-height: 1em;
+    margin: 0;
+    text-align: center;
+}
+
 /* ==========================================================================
    RTL
    ========================================================================== */

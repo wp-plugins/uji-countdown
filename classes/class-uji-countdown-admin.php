@@ -12,6 +12,8 @@
 if ( !defined( 'ABSPATH' ) )
    exit; // Exit if accessed directly
 
+require_once 'UjiSubscriptionsTable.php';
+
 class Uji_Countdown_Admin {
 
    /**
@@ -22,7 +24,16 @@ class Uji_Countdown_Admin {
     * @var     string
     */
    protected $styles = array( 'classic' );
-   
+
+   /**
+    * Antispam
+    *
+    * @since   2.0.3
+    *
+    * @var     boolean
+    */
+   protected static $isGoodByeCaptchaActivated = false;
+
    /**
     * Init label vars
     *
@@ -55,7 +66,8 @@ class Uji_Countdown_Admin {
 
       $this->cform_delete();
 
-      if ( $this->saved_db_style() ) {
+      if ( $this->saved_db_style() )
+      {
 
          $table_headers = '
             	<th class="manage-column" scope="col"><span>' . __( 'Date', $this->plugin_slug ) . '</span></th>
@@ -90,10 +102,16 @@ class Uji_Countdown_Admin {
          
       } else {
          //echo '<div class="ujic-create"><a href="?page=uji-countdown&tab=tab_ujic_new" class="button button-primary" id="ujic_table_new">' . __( 'Create a new timer style', $this->plugin_slug ) . '</a></div>';
-         echo '<div id="ujic_new"><h1>Uji Countdown 2.0</h1><h4>The most customizable countdown plugin for Wordpress</h4>';
+         echo '<div id="ujic_new"><h1>Uji Countdown 2.0.3</h1><h4>The most customizable countdown plugin for Wordpress</h4>';
          echo '<a href="?page=uji-countdown&tab=tab_ujic_new" class="ujic_butnew" id="ujic_table_new">' . __( 'Add New Style', $this->plugin_slug ) . '</a>';
          echo '<div class="ujic_new_cnt"><h2>WHAT\'S NEW</h2>';
          echo '<ul>
+                  <li>
+                     <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-email.png">
+                     <h3>Email Subscription</h3>
+                     <p>Visitors have now the option to subscribe using the email subscription form</p>
+                     <p>You can create unlimited Campaigns</p>
+                  </li>
                   <li>
                      <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-custom.png">
                      <h3>More Customization</h3>
@@ -119,7 +137,7 @@ class Uji_Countdown_Admin {
                   <li>
                      <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-wp.png">
                      <h3>WordPress 4.0</h3>
-                     <p>Fully supports WordPress 4.0, while maintaining compatibility through version 3.5+</p>
+                     <p>Fully supports WordPress 4.1, while maintaining compatibility through version 3.5+</p>
                   </li>
                </ul>';
          echo '</div></div>';
@@ -175,21 +193,80 @@ class Uji_Countdown_Admin {
       
       $cnt .= $this->cform_color( __( 'Label Color:', $this->plugin_slug ), array( 'ujic_col_lab' ), array( __( 'Label Text Color', $this->plugin_slug ) ), array( $vars['ujic_col_lab'] ) );
       $cnt .= $this->cform_sliderui( __( 'Label Size:', $this->plugin_slug ), 'ujic_lab_sz', $vars['ujic_lab_sz'], 8, 25, 1 );
+
+      //Newsletter form
+
+      $cnt .= $this->cform_checkbox(__('Enable Subscribe Form', $this->plugin_slug), array( 'ujic_subscrFrmIsEnabled' ), array( '' ), array( $vars['ujic_subscrFrmIsEnabled'] ) );
+      empty($vars['ujic_subscrFrmWidth']) ? $vars['ujic_subscrFrmWidth'] = 100 : 0;
+      $cnt .= $this->cform_sliderui( __( 'Subscribe Form Width(%):', $this->plugin_slug ), 'ujic_subscrFrmWidth', $vars['ujic_subscrFrmWidth'], 0, 100, 1 );
+
+      empty($cur_id) && empty($vars['ujic_subscrFrmAboveText']) ? $vars['ujic_subscrFrmAboveText'] = __("Join Our Newsletter", $this->plugin_slug) : '';
+      $cnt .= $this->cform_input( __( 'Subscribe Form Above Text', $this->plugin_slug ), 'ujic_subscrFrmAboveText', $vars['ujic_subscrFrmAboveText'] );
+
+      empty($cur_id) && empty($vars['ujic_subscrFrmInputText']) ? $vars['ujic_subscrFrmInputText'] = __("Enter your email here", $this->plugin_slug) : '';
+      $cnt .= $this->cform_input( __( 'Subscribe Form Input Text', $this->plugin_slug ), 'ujic_subscrFrmInputText', $vars['ujic_subscrFrmInputText'] );
+
+      empty($cur_id) && empty($vars['ujic_subscrFrmSubmitText']) ? $vars['ujic_subscrFrmSubmitText'] = __("Subscribe", $this->plugin_slug) : '';
+      $cnt .= $this->cform_input( __( 'Subscribe Form Submit Text', $this->plugin_slug ), 'ujic_subscrFrmSubmitText', $vars['ujic_subscrFrmSubmitText'] );
+
+      empty($cur_id) && empty($vars['ujic_subscrFrmSubmitColor']) ? $vars['ujic_subscrFrmSubmitColor'] = __("Subscribe", $this->plugin_slug) : '';
+      $cnt .= $this->cform_color( __( 'Submit Button Color:', $this->plugin_slug ), array( 'ujic_subscrFrmSubmitColor' ), array( __( 'Button Color', $this->plugin_slug ) ), array( $vars['ujic_subscrFrmSubmitColor'] ) );
+
+      empty($cur_id) && empty($vars['ujic_subscrFrmThanksMessage']) ? $vars['ujic_subscrFrmThanksMessage'] = __("Thanks for subscribing", $this->plugin_slug) : '';
+      $cnt .= $this->cform_input( __( 'Thank You Message', $this->plugin_slug ), 'ujic_subscrFrmThanksMessage', $vars['ujic_subscrFrmThanksMessage'] );
+
+      empty($cur_id) && empty($vars['ujic_subscrFrmErrorMessage']) ? $vars['ujic_subscrFrmErrorMessage'] = __("Invalid email address", $this->plugin_slug) : '';
+      $cnt .= $this->cform_input( __( 'Error Message', $this->plugin_slug ), 'ujic_subscrFrmErrorMessage', $vars['ujic_subscrFrmErrorMessage'] );
+
       $cnt .= $this->cform_buttons();
+
       $cnt .= '</form>';
+
       //Build Metabox
+
       if ( $cur_id )
+
          echo $this->custom_metabox( __( 'Edit Timer Style', $this->plugin_slug ), $cnt, 'ujic-create uji-fedit' );
+
       else
+
          echo $this->custom_metabox( __( 'Create New Timer Style', $this->plugin_slug ), $cnt, 'ujic-create' );
 
+
       //Left Metaboxes
+
       $this->left_metaboxes();
 
+
       //Preview Metaboxes
-      $this->prev_metaboxes( $cur_style );
+
+      $this->prev_metaboxes( $cur_style, $vars);
+
       
    }
+
+	/**
+	 * Print checkbox field.
+	 *
+	 * @since    2.0
+	 */
+	private function cform_checkbox( $label, $names, $name_val, $val ) {
+		$form = '<div class="ujic-box">';
+		$form .= '<div class="label">' . $label . '</div>';
+		$form .= '<div class="ujic-chkbtn">';
+		$i = 0;
+		foreach ( $names as $name ) {
+			$form .= '<input id="' . $name . '" type="checkbox" value="true" class="icheckbox_flat-pink" name="' . $name . '" ' . checked( $val[$i], "true", false ) . '>';
+			$form .= '<label for="' . $name . '">' . $name_val[$i] . '</label>';
+			$i++;
+		}
+		$form .= '</div>';
+		$form .= '</div>';
+
+		return $form;
+	}
+
+
 
    /**
     * Custom Metabox template.
@@ -238,10 +315,10 @@ class Uji_Countdown_Admin {
     *
     * @since    2.0
     */
-   private function prev_metaboxes( $style ) {
+   private function prev_metaboxes( $style, $countDownOptions) {
       if ( $style == 'classic' ) {
          $prw = '<div class="ujic-' . $style . ' hasCountdown" id="ujiCountdown">
-                  <span class="countdown_row">
+                  <span class="countdown_row ujicf">
                      <span class="countdown_section ujic_y">
                         <span class="countdown_amount">0</span>
                         <span class="countdown_amount">1</span>
@@ -278,6 +355,17 @@ class Uji_Countdown_Admin {
                         <span class="countdown_txt">' . __( 'Seconds', $this->plugin_slug ) . '</span>
                      </span>
                   </span>
+
+                  <form>
+                    <span>' . esc_html($countDownOptions['ujic_subscrFrmAboveText'],  $this->plugin_slug) .'</span>
+                    <div>
+	                    <p>
+	                        <input type = "text" readonly="readonly" placeholder = "' . esc_attr($countDownOptions['ujic_subscrFrmInputText']) . '"/>
+	                        <input type = "submit" value = "' . esc_attr($countDownOptions['ujic_subscrFrmSubmitText']) . '" />
+						</p>
+					</div>
+                  </form>
+
                </div>';
       }
       
@@ -301,7 +389,7 @@ class Uji_Countdown_Admin {
     * @since    2.0
     */
    private function pro_metaboxes() {
-      $pro_sho = '<a href="http://wpmanage.com/uji-countdown" target="_blank"><img src="' . UJICOUNTDOWN_URL . 'assets/images/ujic-ps3.png"></a>';
+      $pro_sho = '<a href="http://www.wpmanage.com/uji-countdown" target="_blank"><img src="' . UJICOUNTDOWN_URL . 'assets/images/ujic-ps3.png"></a>';
       echo $this->multi_custom_metabox( array( __( 'Upgrade to PRO Version', $this->plugin_slug ) ), array( $pro_sho ), 'ujic-tut' );
    }
 
@@ -353,25 +441,6 @@ class Uji_Countdown_Admin {
       return $form;
    }
 
-   /**
-    * Print checkbox field.
-    *
-    * @since    2.0
-    */
-   private function cform_checkbox( $label, $names, $name_val, $val ) {
-      $form = '<div class="ujic-box">';
-      $form .= '<div class="label">' . $label . '</div>';
-      $form .= '<div class="ujic-chkbtn">';
-      $i = 0;
-      foreach ( $names as $name ) {
-         $form .= '<input id="' . $name . '" type="checkbox" value="true" class="icheckbox_flat-pink" name="' . $name . '" ' . checked( $val[$i], "true", false ) . '>';
-         $form .= '<label for="' . $name . '">' . $name_val[$i] . '</label>';
-         $i++;
-      }
-      $form .= '</div>';
-      $form .= '</div>';
-      return $form;
-   }
 
    /**
     * Print radio field.
@@ -697,6 +766,27 @@ class Uji_Countdown_Admin {
          return $vars[$name];
       else
          return $vars;      
-   }   
+   }
+   
+   /**
+    * Subscribers
+    *
+    * @since    2.0.3
+    */
+   public function admin_subscribers(){
+
+      $listTable = new UjiSubscriptionsTable();
+
+      ob_start();
+
+      $htmlContent  = '<form id = "uji-subscription-frm" method="get" action="">';
+      $htmlContent .= '<input type="hidden" name="page" value="' . esc_attr($_REQUEST['page']) . '" />';
+      $listTable->display();
+      $htmlContent .= ob_get_clean();
+      $htmlContent .='</form>';
+
+      echo $this->custom_metabox( __( 'Subscribers List', $this->plugin_slug ), $htmlContent , 'ujic-create ujic-subscribers' );
+
+   }
 
 }

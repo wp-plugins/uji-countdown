@@ -31,6 +31,8 @@ jQuery(document).ready(function ($) {
                     window[fname].the_thick(ui.value);
                 if("#ujic_lab_sz" == sId)
                     window[fname].the_lab_sz(ui.value);
+                if('#ujic_subscrFrmWidth' == sId)
+                    window[fname].subscrFormWidth(ui.value);
             }
         });
 
@@ -59,6 +61,8 @@ jQuery(document).ready(function ($) {
         /* Style Preview */
         window[fname].init();
     }
+
+
 
 });
 
@@ -89,7 +93,7 @@ function ujic_admin_home() {
 
 (function ($) {
     classicSelect = {
-        /// Init 
+        /// Init
         init: function () {
             var style = $('#ujic-style');
             if (style.length) {
@@ -99,6 +103,7 @@ function ujic_admin_home() {
                 this.the_colors();
                 this.the_labels();
                 this.the_fonts();
+                this.handleSubscription();
             }
         },
         /// Size 
@@ -126,6 +131,7 @@ function ujic_admin_home() {
                     $('#ujiCountdown').find('.' + format[i]).hide();
                 }
             }
+
             //live change
             $('.iCheck-helper').click(function () {
                 var id = $(this).parent().find(":checkbox").attr("id");
@@ -134,8 +140,56 @@ function ujic_admin_home() {
                 } else {
                     $('#ujiCountdown').find('.' + id).hide();
                 }
+
+                (id === 'ujic_subscrFrmIsEnabled') ? classicSelect.handleSubscription() : null;
+
             });
         },
+        subscrFormWidth : function(newWidth){
+            $('#ujiCountdown form p').width(newWidth + '%');
+        },
+        handleSubscription : function(){
+            var formElements = {
+
+                subscrFrmElm           : $('#ujiCountdown form'),
+                subscrFrmWidth         : $('#ujic_subscrFrmWidth').parent(),
+                subscrFrmAboveTxt      : $('#ujic_subscrFrmAboveText').parent(),
+                subscrFrmInputTxt      : $('#ujic_subscrFrmInputText').parent(),
+                subscrFrmSubmitTxt     : $('#ujic_subscrFrmSubmitText').parent(),
+                subscrFrmThanksMessage : $('#ujic_subscrFrmThanksMessage').parent(),
+                subscrFrmErrorMessage  : $('#ujic_subscrFrmErrorMessage').parent(),
+                subscrFrmSubmitColor   : $('#ujic_subscrFrmSubmitColor').closest( ".ujic-color" )
+
+            };
+
+            var isFormEnabled = $('#ujic_subscrFrmIsEnabled').is(':checked');
+            this.toggleSubscriptionElements(formElements, isFormEnabled);
+
+            formElements.subscrFrmAboveTxt.children('input').keyup(function(){
+                formElements.subscrFrmElm.children('span').text($(this).val());
+            }).keydown(function(evt){13 == evt.which ? evt.preventDefault() : '';});
+
+            formElements.subscrFrmInputTxt.children('input').keyup(function(){
+                formElements.subscrFrmElm.find('input:text').attr('placeholder', $(this).val());
+            }).keydown(function(evt){13 == evt.which ? evt.preventDefault() : '';});
+
+            formElements.subscrFrmSubmitTxt.children('input').keyup(function(){
+                formElements.subscrFrmElm.find('input:submit').val($(this).val()).click(function(evt){evt.preventDefault();});
+            }).keydown(function(evt){13 == evt.which ? evt.preventDefault() : '';});
+
+
+        },
+        toggleSubscriptionElements : function(elements, visible){
+
+            $.each(elements, function(prop, elm){
+                (!!visible) ? elm.show() : elm.hide(1000);
+            });
+        },
+        //color light 
+        shadeColor : function(color, percent) {  
+                var num = parseInt(color.slice(1),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+                return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+            },
         /// Colors 
         the_colors: function (id, hex) {
             var col_txt = $('#ujic_col_txt').val();
@@ -143,6 +197,7 @@ function ujic_admin_home() {
             var col_up = $('#ujic_col_up').val();
             var col_dw = $('#ujic_col_dw').val();
             var col_lab = $('#ujic_col_lab').val();
+            var col_sub = $('#ujic_subscrFrmSubmitColor').val();
 
             $('.countdown_amount').css('color', col_txt);
             $('.countdown_amount').css("text-shadow", '1px 1px 1px ' + col_sw);
@@ -156,12 +211,23 @@ function ujic_admin_home() {
             $('.ujic-classic').find('.countdown_amount').css("filter", "progid:DXImageTransform.Microsoft.gradient( startColorstr='" + col_up + "', endColorstr='" + col_dw + "',GradientType=0 )"); /* IE6-9 */
 
             $('.countdown_txt').css('color', col_lab);
+            
+            $('#ujiCountdown').find('input[type=submit]').css("background", "-moz-linear-gradient(top,  " + col_sub + " 0%, " + this.shadeColor(col_sub, 20) + " 100%)"); /* FF3.6+ */
+            $('#ujiCountdown').find('input[type=submit]').css("background", "-webkit-gradient(linear, left top, left bottom, color-stop(0%," + col_sub + "), color-stop(100%," + this.shadeColor(col_sub, 20) + "))"); /* Chrome,Safari4+ */
+            $('#ujiCountdown').find('input[type=submit]').css("background", "-webkit-linear-gradient(top,  " + col_sub + " 50%," + this.shadeColor(col_sub, 20) + " 100%)"); /* Chrome10+,Safari5.1+ */
+            $('#ujiCountdown').find('input[type=submit]').css("background", "-o-linear-gradient(top,  " + col_sub + " 0%," + this.shadeColor(col_sub, 20) + " 100%)"); /* Opera 11.10+ */
+            $('#ujiCountdown').find('input[type=submit]').css("background", "-ms-linear-gradient(top,  " + col_sub + " 0%," + this.shadeColor(col_sub, 20) + " 100%)"); /* IE10+ */
+            $('#ujiCountdown').find('input[type=submit]').css("background", "linear-gradient(to bottom,  " + col_sub + " 0%," + this.shadeColor(col_sub, 20) + " 100%)"); /* W3C */
+            $('#ujiCountdown').find('input[type=submit]').css("filter", "progid:DXImageTransform.Microsoft.gradient( startColorstr='" + col_sub + "', endColorstr='" + this.shadeColor(col_sub, 20) + "',GradientType=0 )"); /* IE6-9 */
+
         },
         /// Colors 
         new_colors: function (id, hex) {
             var col_up = $('#ujic_col_up').val();
             var col_dw = $('#ujic_col_dw').val();
-
+            
+         
+            //console.log(id);
             switch (id)
             {
                 case 'ujic_col_txt':
@@ -190,6 +256,16 @@ function ujic_admin_home() {
                     break;
                 case 'ujic_col_lab':
                     $('.countdown_txt').css('color', hex);
+                    break;
+                case 'ujic_subscrFrmSubmitColor':
+                    //console.log(this.shadeColor(hex, 70));
+                    $('#ujiCountdown').find('input[type=submit]').css("background", "-moz-linear-gradient(top,  " + hex + " 0%, " + this.shadeColor(hex, 20) + " 100%)"); /* FF3.6+ */
+                    $('#ujiCountdown').find('input[type=submit]').css("background", "-webkit-gradient(linear, left top, left bottom, color-stop(0%," + hex + "), color-stop(100%," + this.shadeColor(hex, 20) + "))"); /* Chrome,Safari4+ */
+                    $('#ujiCountdown').find('input[type=submit]').css("background", "-webkit-linear-gradient(top,  " + hex + " 50%," + this.shadeColor(hex, 20) + " 100%)"); /* Chrome10+,Safari5.1+ */
+                    $('#ujiCountdown').find('input[type=submit]').css("background", "-o-linear-gradient(top,  " + hex + " 0%," + this.shadeColor(hex, 20) + " 100%)"); /* Opera 11.10+ */
+                    $('#ujiCountdown').find('input[type=submit]').css("background", "-ms-linear-gradient(top,  " + hex + " 0%," + this.shadeColor(hex, 20) + " 100%)"); /* IE10+ */
+                    $('#ujiCountdown').find('input[type=submit]').css("background", "linear-gradient(to bottom,  " + hex + " 0%," + this.shadeColor(hex, 20) + " 100%)"); /* W3C */
+                    $('#ujiCountdown').find('input[type=submit]').css("filter", "progid:DXImageTransform.Microsoft.gradient( startColorstr='" + hex + "', endColorstr='" + this.shadeColor(hex, 20) + "',GradientType=0 )"); /* IE6-9 */
                     break;
             }
         },

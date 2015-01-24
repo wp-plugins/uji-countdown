@@ -139,7 +139,7 @@ class Ujic_shortcodes
 						
 						break;
                
-               case 'datapick' :
+                                        case 'datapick' :
 						
 						// prepare
                   
@@ -152,7 +152,7 @@ class Ujic_shortcodes
 						
 						break;
                
-               case 'timepick' :
+                                        case 'timepick' :
 						
 						// prepare
 						$output  = $row_start;
@@ -165,7 +165,7 @@ class Ujic_shortcodes
 						
 						$output .= '</select> : ' . "\n";
                   
-                  $output .= '<select name="' . $pkey . '_" id="' . $pkey . '_" class="ujic-form-select ujic-input">' . "\n";
+                                                $output .= '<select name="' . $pkey . '_" id="' . $pkey . '_" class="ujic-form-select ujic-input">' . "\n";
 						
 						foreach( $param['options_m'] as $value => $option )
 						{
@@ -181,12 +181,12 @@ class Ujic_shortcodes
 						
 						break;
                   
-               case 'expiry' :
+                                        case 'expiry' :
 						
 						// prepare
                   
 						$output  = $row_start;
-                  $output .= '<label for="' . $pkey . '" class="ujic-form-checkbox">' . $param['fname'] . "\n";
+                                                $output .= '<label for="' . $pkey . '" class="ujic-form-checkbox">' . $param['fname'] . "\n";
 						$output .= '<input type="checkbox" class="ujic-input" name="' . $pkey . '" value="true" id="' . $pkey . '" ' . ( !empty($param['std']) ? 'checked' : '' ) . ' />' . "\n";
 						$output .= '</label>' . "\n";
 						$output .= '<div id="ujic-form-expiry-url">' . $param['fname2'] .' <input type="text" class="ujic-input ujic-form-expiry" name="' . $pkey . '_" id="' . $pkey . '_" placeholder="' . $param['std2'] . '" value="" /></div>' . "\n";

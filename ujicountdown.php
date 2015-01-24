@@ -9,8 +9,8 @@
  * @wordpress-plugin
  * Plugin Name: Uji Countdown
  * Plugin URI: http://wpmanage.com/uji-countdown
- * Description: HTML5 Countdown.
- * Version: 2.0.2
+ * Description: HTML5 Customizable Countdown.
+ * Version: 2.0.3
  * Author: Wpmanage
  * Author URI: http://wpmanage.com
  * Text Domain: uji-countdown
@@ -19,11 +19,10 @@
 */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+defined( 'WPINC' ) || exit;
+
 define( 'UJIC_NAME', 'Uji Countdown' );
-define( 'UJIC_VERS', '2.0' );
+define( 'UJIC_VERS', '2.0.3' );
 define( 'UJIC_FOLD', 'uji-countdown' );
 define( 'UJICOUNTDOWN', trailingslashit( dirname(__FILE__) ) );
 define( 'UJICOUNTDOWN_URL', plugin_dir_url( __FILE__ ) );

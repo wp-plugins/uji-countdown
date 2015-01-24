@@ -9,10 +9,10 @@
  * Author URI: http://www.wpmanage.com
  */
 
-if ( !defined( 'ABSPATH' ) )
-    exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-class Uji_Countdown extends Uji_Countdown_Admin {
+class Uji_Countdown extends Uji_Countdown_Admin
+{
 
     /**
      * Uji Countdown
@@ -86,11 +86,41 @@ class Uji_Countdown extends Uji_Countdown_Admin {
      * @since     2.0
      */
     public function __construct() {
-       
+
        // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
        register_activation_hook( UJICOUNTDOWN_FILE, array( $this, 'activate' ) );
        register_deactivation_hook( UJICOUNTDOWN_FILE, array( $this, 'deactivate' ) );
-       
+
+       global $wpdb;
+
+        if(version_compare(self::getPluginSavedVersion(), '2.0.2') < 0)
+        {
+            $createTableStatement = "CREATE TABLE " . self::getSubscriptionsTableName() . "(
+						  Id int unsigned NOT NULL auto_increment,
+						  EmailAddress varchar(64) NOT NULL,
+						  ProviderId tinyint unsigned DEFAULT '0',
+						  List varchar(128) DEFAULT NULL,
+						  ListGroup varchar(32) DEFAULT NULL,
+						  CreatedDate datetime NOT NULL,
+						  IsSynchronized tinyint unsigned NOT NULL DEFAULT '0',
+						  PRIMARY KEY  (Id)
+						)";
+
+            $createTableStatement .= !empty($wpdb->charset) ? " DEFAULT CHARACTER SET $wpdb->charset" : '';
+            $createTableStatement .= !empty($wpdb->collate) ? " COLLATE $wpdb->collate"               : '';
+
+            if($wpdb->get_var($wpdb->prepare("show tables like %s", self::getSubscriptionsTableName())) !== self::getSubscriptionsTableName())
+            {
+                require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+                dbDelta($createTableStatement);
+            }
+
+        }
+
+        self::savePluginVersion();
+
+        self::$isGoodByeCaptchaActivated = class_exists('GoodByeCaptcha', false);
+
         //Show on front
         if ( !is_admin() ) {
             $ujic = new UjiCountdown();
@@ -104,7 +134,14 @@ class Uji_Countdown extends Uji_Countdown_Admin {
         // HOOKs Widget		
         add_action( 'widgets_init', array( $this, 'ujic_register_widgets' ) );	
         
-        if ( is_admin() ) {
+        if ( is_admin() )
+        {
+
+            if(!empty($_GET['page']) && $_GET['page'] === 'uji-countdown' && !empty($_GET['action']) && $_GET['action'] === 'cvs-export')
+            {
+                new UjiSubscriptionsTable();
+                exit;
+            }
 
            // Add the options page and menu item.
            add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
@@ -118,8 +155,65 @@ class Uji_Countdown extends Uji_Countdown_Admin {
            
            // Add the Link from plugins
            add_filter('plugin_action_links', array($this, 'plugin_settings_link'),10,2);
-           
+
+           //Subscription
+           add_action('wp_ajax_nopriv_ujiSubscribe', array( $this, 'handleSubscription' ) );
+           add_action('wp_ajax_ujiSubscribe',        array( $this, 'handleSubscription' ) );
+
+           !self::$isGoodByeCaptchaActivated ? add_action('admin_notices', array($this, 'showAntiSpamAdminNotice')) : null;
         }
+
+    }
+    
+    /**
+     * Subscription
+     *
+     * @since     2.0.3
+     */
+    protected static function getSubscriptionsTableName()
+    {
+        global $wpdb;
+        return $wpdb->prefix . 'uji_subscriptions';
+    }
+
+    protected static function getPluginSavedVersion()
+    {
+        return get_option('uji-countdown-version', null);
+    }
+
+    protected static function savePluginVersion()
+    {
+        return update_option('uji-countdown-version', UJIC_VERS);
+    }
+
+    public function handleSubscription()
+    {
+        global $wpdb;
+        $_POST = array_map('trim', $_POST);
+
+        $_POST['txtEmail'] = strtolower(sanitize_email($_POST['txtEmail']));
+        $showErrorMessage   = empty($_POST['txtEmail']) || (false === filter_var($_POST['txtEmail'], FILTER_VALIDATE_EMAIL));
+        (!$showErrorMessage) ? $showErrorMessage = !check_ajax_referer('uji-subscribe-newsletter', 'uji-subscribe-nonce', false) : null;
+        (!$showErrorMessage && self::$isGoodByeCaptchaActivated) ? $showErrorMessage = !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_UJI_COUNTDOWN)) : null;
+
+        $showErrorMessage ? wp_send_json_error() : null;
+
+        $arrFields = array(
+                        'EmailAddress' => $_POST['txtEmail'],
+                        'CreatedDate' => current_time('mysql'),
+                    );
+        if(!empty($_POST['txtList']))
+        {
+            $_POST['txtList'] = sanitize_text_field($_POST['txtList']);
+            !empty($_POST['txtList']) ? $arrFields['List'] = $_POST['txtList'] : null;
+        }
+
+        false !== $wpdb->insert(
+                                    self::getSubscriptionsTableName(),
+                                    $arrFields,
+                                    array_fill(0, count($arrFields), '%s')
+                                ) ? wp_send_json_success() : wp_send_json_error();
+
     }
 
     /**
@@ -153,34 +247,55 @@ class Uji_Countdown extends Uji_Countdown_Admin {
             "ujic_o" => 0, //Secondary format: Months
             "ujic_w" => 0, //Secondary format: Weeks
             "ujic_txt" => "true", //Show Label Text
-            "ujic_ani" => 0 //Animation for seconds	
+            "ujic_ani" => 0, //Animation for seconds
+
+	        "ujic_subscrFrmIsEnabled" => "true", // Enable subscribe form
+	        "ujic_subscrFrmAboveText" => "",//__("Join Our Newsletter"), // Subscription form text above
+	        "ujic_subscrFrmInputText" => "",//__("Enter your email here"), // Subscription form input text placeholder
+	        "ujic_subscrFrmSubmitText" => "",//__("Subscribe"), // Subscription form input text placeholder
+            "ujic_subscrFrmWidth" => 100, // Subscription form width(%) relative to holder
+            "ujic_subscrFrmSubmitColor" => '#ab02b2', //Submit Button Color
+            "ujic_subscrFrmThanksMessage" => "",//__("Thanks for subscribing"), //Thank you message
+            "ujic_subscrFrmErrorMessage"  => ""//__("Invalid email address"), //Error message
+
         );
 
         //Return default values	
-        if ( (!isset( $name ) || empty( $name ) ) && (!isset( $id ) || empty( $id ) ) ) {
-            if ( $this->cform_is_create() ) {
-                foreach ( $options as $nm => $val ) {
+        if ( (!isset( $name ) || empty( $name ) ) && (!isset( $id ) || empty( $id ) ) )
+        {
+            if ( $this->cform_is_create() )
+            {
+                foreach ( $options as $nm => $val )
+                {
                     $new_options[$nm] = ( isset( $_POST[$nm] ) && !empty( $_POST[$nm] ) ) ? $_POST[$nm] : '';
                 }
+
                 return $new_options;
-            } else {
+            }
+            else
+            {
                 return $options;
             }
         }
 
         //Return all saved values	
-        if ( !isset( $name ) && isset( $id ) ) {
+        if ( !isset( $name ) && isset( $id ) )
+        {
             $get_option = $this->sel_ujic_db( $id );
 
-            foreach ( $options as $nm => $val ) {
+            foreach ( $options as $nm => $val )
+            {
                 $val = ( isset( $_GET['edit'] ) && !empty( $_GET['edit'] ) ) ? '' : $val;
-                $new_options[$nm] = ( isset( $get_option[$nm] ) && !empty( $get_option[$nm] ) ) ? $get_option[$nm] : $val;
+                //$new_options[$nm] = ( isset( $get_option[$nm] ) && !empty( $get_option[$nm] ) ) ? $get_option[$nm] : $val;
+
+                $new_options[$nm] = !empty( $get_option[$nm]) ? $get_option[$nm] : $val;
             }
             return $new_options;
         }
 
         //Return one saved value
-        if ( isset( $name ) && isset( $id ) && !empty( $name ) && !empty( $id ) ) {
+        if ( isset( $name ) && isset( $id ) && !empty( $name ) && !empty( $id ) )
+        {
             $one_option = $this->sel_ujic_db( $id, $name );
             $new_option = (!empty( $one_option ) ) ? $one_option : $options[$name];
         }
@@ -370,7 +485,7 @@ class Uji_Countdown extends Uji_Countdown_Admin {
             
             $this->upd_ujic_db( $posts, $data->id );
             
-            $wpdb->query( "ALTER TABLE " . self::ujic_tab_name() . " ENGINE = INNODB;");
+            $wpdb->query( "ALTER TABLE " . self::ujic_tab_name());
             $wpdb->query( "ALTER TABLE " . self::ujic_tab_name() . " DROP `size`, DROP `col_dw`, DROP `col_up`, DROP `ujic_pos`, DROP `col_txt`, DROP `col_sw`, DROP `ujic_ani`, DROP `ujic_txt`, DROP `ujic_thick`;");
 
          }
@@ -451,13 +566,31 @@ class Uji_Countdown extends Uji_Countdown_Admin {
 
         $screen = get_current_screen();
         if ( $screen->id == $this->plugin_screen_hook_suffix ) {
-           if(isset($_GET['tab']) && (isset($_GET['tab']) && $_GET['tab'] != "tab_ujic_list") ){
+           if( isset($_GET['tab']) && $_GET['tab'] != "tab_ujic_list"){
                wp_enqueue_style( 'wp-color-picker' );
                wp_enqueue_style( $this->plugin_slug . '-admin-jqueryui', UJICOUNTDOWN_URL . 'assets/css/jquery-ui-custom.css', array(), $this->version );
                wp_enqueue_style( $this->plugin_slug . '-admin-icheck', UJICOUNTDOWN_URL . 'assets/css/pink.css', array(), $this->version );
            }
             wp_enqueue_style( $this->plugin_slug . '-admin-styles', UJICOUNTDOWN_URL . 'assets/css/admin.css', array(), $this->version );
         }
+    }
+    
+    /**
+     * Anti Spam Notice
+     *
+     * @since     2.0.3
+     *
+     */
+    public function showAntiSpamAdminNotice()
+    {
+        $screen = get_current_screen();
+        if($screen->id != $this->plugin_screen_hook_suffix)
+            return;
+
+        if(empty($_GET['tab']) || ($_GET['tab'] !== 'tab_ujic_new' && $_GET['tab'] !== 'tab_ujic_news'))
+            return;
+
+        echo '<div class="error"><p>' . _('In order to avoid fake subscriptions we suggest to install <a target="_blank" href = "https://wordpress.org/plugins/goodbye-captcha/">GoodBye Captcha Plugin</a>') . '</p></div>';
     }
 
     /**
@@ -479,8 +612,12 @@ class Uji_Countdown extends Uji_Countdown_Admin {
             wp_enqueue_script( 'jquery-ui-core' );
             wp_enqueue_script( 'jquery-ui-slider' );
             wp_enqueue_script( 'jquery-ui-draggable' );
-            wp_enqueue_script( $this->plugin_slug . '-admin-icheck', UJICOUNTDOWN_URL . 'assets/js/jquery.icheck.min.js' );
-            wp_enqueue_script( $this->plugin_slug . '-admin-script', UJICOUNTDOWN_URL . 'assets/js/admin.js', array( 'wp-color-picker' ), $this->version );
+
+            if($_GET['tab'] != "tab_ujic_news")
+            {
+                wp_enqueue_script($this->plugin_slug . '-admin-icheck', UJICOUNTDOWN_URL . 'assets/js/jquery.icheck.min.js');
+                wp_enqueue_script($this->plugin_slug . '-admin-script', UJICOUNTDOWN_URL . 'assets/js/admin.js', array('wp-color-picker'), $this->version);
+            }
         }
     }
 
@@ -493,6 +630,8 @@ class Uji_Countdown extends Uji_Countdown_Admin {
         wp_register_style( $this->plugin_slug . '-uji-countdown', UJICOUNTDOWN_URL . 'css/uji-countdown.css', array(), $this->version );
         wp_register_script( $this->plugin_slug . '-core', UJICOUNTDOWN_URL . 'js/jquery.countdown.js', array( 'jquery' ), $this->version );
         wp_register_script( $this->plugin_slug . '-init', UJICOUNTDOWN_URL . 'js/uji-countdown.js', array( 'jquery' ), $this->version );
+        wp_register_script( $this->plugin_slug . '-uji-countdown-newsletter', UJICOUNTDOWN_URL . 'js/uji-newsletter.js', array( 'jquery' ), $this->version );
+
     }
 
     /**
@@ -597,9 +736,11 @@ class Uji_Countdown extends Uji_Countdown_Admin {
     * @since    2.0
     */
    public function ujic_get_option( $name, $opt = 'ujic_set' ) {
+
       $vars = get_option($opt);
-      if($name && isset($vars[$name]) && !empty($vars[$name]) )
-         return $vars[$name];
+      if($name && isset($vars[$name]) && !empty($vars[$name]) ) {
+          return $vars[$name];
+      }
       else
          return false;      
    }   

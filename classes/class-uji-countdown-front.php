@@ -8,8 +8,8 @@
  * Author: WPmanage <info@wpmanage.com>
  * Author URI: http://www.wpmanage.com
  */
-if ( !defined( 'ABSPATH' ) )
-    exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
+
 
 class UjiCountdown extends Uji_Countdown {
     
@@ -64,7 +64,8 @@ class UjiCountdown extends Uji_Countdown {
                         'id' => "",
                         'expire' => "",
                         'hide' => "",
-                        'url' => ""
+                        'url' => "",
+                        'subscr' => ""
                         ), $atts ) );
         //Increment counters
         static $ujic_count = 0;
@@ -78,11 +79,14 @@ class UjiCountdown extends Uji_Countdown {
 
             //get all vars
             $get_vars = self::uji_vars();
-            
+
             foreach ($get_vars as $nm => $var){
                  ${$nm} = $this->sel_ujic_db( $id, $var );
             }
-                    
+
+
+
+
             $ujic_id = 'ujiCountdown';
             $classh = !empty( $ujic_style ) ? ' ujic-' . $ujic_style : '';
             $hclass =!empty( $class ) ? ' ujic_' . $class . '' : '';
@@ -99,6 +103,7 @@ class UjiCountdown extends Uji_Countdown {
             wp_enqueue_style( $this->plugin_slug . '-uji-countdown' );
             wp_enqueue_script( $this->plugin_slug . '-core' );
             wp_localize_script( $this->plugin_slug . '-init', 'ujiCount', array(
+                'ajaxUrl' => admin_url('admin-ajax.php'),
                 'uji_plugin' => plugins_url(),
                 'uji_style' => $ujic_style,
                 'expire' => $expire,
@@ -137,16 +142,58 @@ class UjiCountdown extends Uji_Countdown {
                 'ujic_y' => $ujic_y, //Secondary format: Years
                 'ujic_o' => $ujic_o, //Secondary format: Months
                 'ujic_w' => $ujic_w, //Secondary format: Weeks
-                'uji_time' => date_i18n( 'M j, Y H:i:s O' ),
+                'uji_time' => date_i18n( 'M j, Y H:i:s' ) ."+0000",
                 'uji_hide' => ($hide == "true") ? 'true' : 'false',
                 'ujic_rtl' => ( $this->ujic_get_option('ujic_rtl') ) ? $this->ujic_get_option('ujic_rtl')  : false,
                 'uji_utime' => ( $this->ujic_get_option('ujic_utime') ) ? $this->ujic_get_option('ujic_utime')  : false
             ) );
 
             wp_enqueue_script( $this->plugin_slug . '-init' );
+
             $ujic_count ++;
-            return strip_shortcodes( '<div class="ujic-hold' . $hclass . '"> <div class="ujiCountdown' . $classh . '" id="' . $ujic_id . '"></div></div>' . $content );
+
+            $ujic_subscrFrmIsEnabled = filter_var($this->sel_ujic_db( $id, 'ujic_subscrFrmIsEnabled' ), FILTER_VALIDATE_BOOLEAN);
+
+            if(!$ujic_subscrFrmIsEnabled)
+            {
+                return strip_shortcodes( '<div class="ujic-hold' . $hclass . '"> <div class="ujiCountdown' . $classh . '" id="' . $ujic_id . '"></div></div>' . $content );
+            }
             
+            wp_enqueue_script( $this->plugin_slug . '-uji-countdown-newsletter' );
+
+            $ujic_subscrFrmWidth         = trim($this->sel_ujic_db( $id, 'ujic_subscrFrmWidth' ));
+            $ujic_subscrFrmAboveText     = trim($this->sel_ujic_db( $id, 'ujic_subscrFrmAboveText' ));
+            $ujic_subscrFrmInputText     = trim($this->sel_ujic_db( $id, 'ujic_subscrFrmInputText' ));
+            $ujic_subscrFrmSubmitText    = trim($this->sel_ujic_db( $id, 'ujic_subscrFrmSubmitText' ));
+            $ujic_subscrFrmSubmitColor   = trim($this->sel_ujic_db( $id, 'ujic_subscrFrmSubmitColor' ));
+            $ujic_subscrFrmThanksMessage = trim($this->sel_ujic_db( $id, 'ujic_subscrFrmThanksMessage' ));
+            $ujic_subscrFrmErrorMessage  = trim($this->sel_ujic_db( $id, 'ujic_subscrFrmErrorMessage' ));
+            $ujic_subscrFrmName          = !empty($subscr) ? $subscr : __('Subscription', $this->plugin_slug);
+
+            $formHtmlCode  = '<div class = "ujicf"></div>';
+	        $formHtmlCode .= '<form class = "ujicf" style = "margin-top:' . (empty($ujic_subscrFrmAboveText) ? '10px' : 0) . '">';
+
+            $formHtmlCode .= !empty($ujic_subscrFrmAboveText) ? '<span>' . esc_html__($ujic_subscrFrmAboveText) . '</span>' : '';
+            
+            $formHtmlCode .= '<div>
+	                    <p style = "width:' . (empty($ujic_subscrFrmWidth)  ? '100%' : esc_attr("$ujic_subscrFrmWidth%")) . '">
+	                        <input name = "txtEmail" type = "text" placeholder = "' . esc_attr($ujic_subscrFrmInputText) .'"/>
+                                <input name = "txtList" type = "hidden"  value = "' . esc_attr($ujic_subscrFrmName) . '" />
+	                        <input type = "submit" value = "' . esc_attr($ujic_subscrFrmSubmitText) . '" color-attr="' . esc_attr($ujic_subscrFrmSubmitColor) . '" />
+                        </p>
+                        <span class = "uji-msg-ok">' . esc_html__($ujic_subscrFrmThanksMessage, $this->plugin_slug) . '</span>
+                        <span class = "uji-msg-err">' . esc_html__($ujic_subscrFrmErrorMessage, $this->plugin_slug) . '</span>
+					</div>';
+
+            $formHtmlCode .= self::$isGoodByeCaptchaActivated ? GdbcTokenController::getInstance()->getTokenInputField() : '';
+
+            $formHtmlCode .= wp_nonce_field('uji-subscribe-newsletter', 'uji-subscribe-nonce', false, false);
+
+            $formHtmlCode .= '</form>';
+
+	    $htmlCode = strip_shortcodes('<div class="ujic-hold' . $hclass . '"> <div id = "uji-wrapper" class = "ujicf"> <div class="ujicf ujiCountdown' . $classh . '" id="' . $ujic_id . '"></div>'.$formHtmlCode.'</div></div>' . $content );
+
+	    return $htmlCode;
         }
     }
 

@@ -4,7 +4,7 @@ Contributors: ujimoto
 Donate link: http://www.wpmanage.com/uji-countdown
 Tags: countdown, counter, html5 countdown, animated countdown, countdown timer, count down, countdown clock, jQuery countdown, clock, timer
 Requires at least: 3.0
-Tested up to: 4.0.1
+Tested up to: 4.1
 Stable tag: 2.0
 
 Uji Countdown - HTML5 Customizable Countdown Timer
@@ -40,6 +40,11 @@ WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-
 4. Place your Countdown in Post/Page via Edit: Post or Page
 
 == Changelog ==
+
+= 2.0.3 =
+* NEW: Email Subscription
+* Visitors have now the option to subscribe using the email subscription form
+* You can create unlimited Campaigns
 
 = 2.0.2 =
 * Fixed activation error conflict
