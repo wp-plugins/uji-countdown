@@ -1,0 +1,206 @@
+/* ==========================================================================
+   Classic
+   ========================================================================== */
+.ujic-classic{
+    position:  relative;
+    overflow:  hidden;
+}    
+    
+.ujic-classic .countdown_section { 
+	float:left; 
+	display: block; 
+	text-align: center;
+	margin: 0 15px 0 0;
+}
+
+.ujic-classic span.countdown_amount {
+	display: inline-block;
+	color: #fff;
+	padding: 5px;
+	margin-right: 2px;
+
+	font: 35px/1.5 'Open Sans Condensed',sans-serif;
+	font-weight: normal; 
+	
+	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
+	
+   -webkit-border-radius: 5px;
+   -ms-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+	text-shadow: 1px 1px 1px #000;
+	
+	background: #a61ba6; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a61ba6 50%, #c368c3 50%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#a61ba6), color-stop(50%,#c368c3)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #a61ba6 50%,#c368c3 50%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #a61ba6 50%,#c368c3 50%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #a61ba6 50%,#c368c3 50%); /* IE10+ */
+	background: linear-gradient(to bottom,  #a61ba6 50%,#c368c3 50%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a61ba6', endColorstr='#c368c3',GradientType=0 ); /* IE6-9 */
+
+}
+
+.ujic-classic span.countdown_txt {
+	display: block;
+	text-align: center;
+	margin: 5px 0 0 0;
+}
+
+/* The ghost, nudged to maintain perfect centering */
+.ujic-hold:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em; /* Adjusts for spacing */
+}
+
+.ujic-hold .ujiCountdown {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.ujic_center{
+    text-align: center;
+}
+
+.ujic_left{
+    text-align: left;
+}
+
+.ujic_right{
+    text-align: right;
+}
+
+.ujic_right:after{
+    clear: both;
+    float: none;
+}
+
+.countdown_section {
+    width: auto!important;
+    text-transform: none!important;
+}
+
+
+/******************** Newsletter *************/
+.ujicf:before, .ujicf:after { content: ""; display: table; }
+.ujicf:after { clear: both; }
+.ujicf { *zoom: 1; }
+
+#ujiCountdown
+{
+    display:inline-block;
+    margin-bottom:0;
+}
+
+#ujiCountdown span.countdown_row
+{
+    display:block;
+}
+
+#ujiCountdown span.ujic_s
+{
+    margin-right: 0;
+}
+
+#uji-wrapper
+{
+    display:inline-block;
+    margin: 0 auto;
+}
+
+.ujic-hold form
+{
+    display:block;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.ujic-hold form span
+{
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.1em;
+    margin: 1em 0;
+    text-align: center;
+}
+
+.ujic-hold form p
+{
+    width:100%;
+    display: inline-block;
+    margin: 0 auto !important;
+    text-align: center;
+}
+
+.ujic-hold form input
+{
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 30px !important;
+}
+
+.ujic-hold form div
+{
+    text-align: center;
+}
+
+.ujic-hold form input[type="text"]
+{
+    background: none repeat scroll 0 0 #fff;
+    border: medium none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    border-radius: 3px 0 0 3px;
+    font-size: 13px;
+    margin: 0;
+    padding: 0px 5%;
+    text-align: center;
+    width: 70%;
+    float:left;
+}
+
+.ujic-hold form input[type="submit"]
+{
+    border-radius: 0 3px 3px 0;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0 3%;
+    text-transform: uppercase;
+    width: 30%;
+    border: medium none;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    color: #fff;
+    background: linear-gradient(to bottom , #c816d0, #ab02b2) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float:left;
+}
+.ujic-hold form span.uji-msg-err
+{
+    color:#CE0000;
+}
+.ujic-hold form span.uji-msg-ok
+{
+    color:green;
+}
+
+.ujic-hold form div span
+{
+    display: none;
+    line-height: 1em;
+    margin: 0;
+    text-align: center;
+}
+
+/* ==========================================================================
+   RTL
+   ========================================================================== */
+.countdown-rtl{
+    direction: initial;
+}
