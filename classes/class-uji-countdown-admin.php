@@ -1,7 +1,5 @@
 <?php
 
-defined( 'WPINC' ) || exit;
-
 require_once 'UjiSubscriptionsTable.php';
 
 class Uji_Countdown_Admin {

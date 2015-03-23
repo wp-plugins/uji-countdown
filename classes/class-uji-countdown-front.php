@@ -8,8 +8,6 @@
  * Author: WPmanage <info@wpmanage.com>
  * Author URI: http://www.wpmanage.com
  */
-defined( 'ABSPATH' ) || exit;
-
 
 class UjiCountdown extends Uji_Countdown {
     

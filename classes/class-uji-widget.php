@@ -8,8 +8,6 @@
  * Author: WPmanage <info@wpmanage.com>
  * Author URI: http://www.wpmanage.com
  */
-if ( !defined( 'ABSPATH' ) )
-   exit; // Exit if accessed directly
 
 class ujic_Widget extends WP_Widget {
 

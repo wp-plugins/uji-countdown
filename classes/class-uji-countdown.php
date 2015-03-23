@@ -9,8 +9,6 @@
  * Author URI: http://www.wpmanage.com
  */
 
-defined( 'ABSPATH' ) || exit; // Exit if accessed directly
-
 class Uji_Countdown extends Uji_Countdown_Admin
 {
 
