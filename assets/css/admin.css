@@ -264,6 +264,10 @@ Admin Form
 	background: url(../images/classic.png) center 1px no-repeat;
 }
 
+#ujic-style-modern{
+	background: url(../images/modern.png) center 1px no-repeat;
+}
+
 #ujic-style-custom{
 	background: url(../images/custom.png) center 1px no-repeat;
 }
@@ -429,17 +433,6 @@ Preview Style
 	margin: 5px 0 0 0;
 }
 
-
-.nav-tab-pro{
-    background-color: #9a469a;
-    color: #ffffff!important;
-}
-
-.nav-tab-pro:hover{
-    background-color: #793979;
-    color: #ffffff!important;
-}
-
 /*
 ============================================================================
 Newsletter
@@ -535,6 +528,21 @@ Newsletter
     float:left;
 }
 
+/*
+============================================================================
+Modern Style
+============================================================================
+*/
+
+.ujic-modern .ujicircle{
+    display: inline-block;
+    margin: 0.5em;
+}
+
+.ujic-modern .circles-wrp span.countdown_txt {
+    text-align: center;
+    display: block;
+}
 
 /*
 ============================================================================
