@@ -92,42 +92,53 @@ class Uji_Countdown_Admin {
          
       } else {
          //echo '<div class="ujic-create"><a href="?page=uji-countdown&tab=tab_ujic_new" class="button button-primary" id="ujic_table_new">' . __( 'Create a new timer style', $this->plugin_slug ) . '</a></div>';
-         echo '<div id="ujic_new"><h1>Uji Countdown 2.0.3</h1><h4>The most customizable countdown plugin for Wordpress</h4>';
+         echo '<div id="ujic_new"><h1>Uji Countdown '.UJIC_VERS.'</h1><h4>The most customizable countdown plugin for Wordpress</h4>';
          echo '<a href="?page=uji-countdown&tab=tab_ujic_new" class="ujic_butnew" id="ujic_table_new">' . __( 'Add New Style', $this->plugin_slug ) . '</a>';
          echo '<div class="ujic_new_cnt"><h2>WHAT\'S NEW</h2>';
          echo '<ul>
-                  <li>
-                     <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-email.png">
-                     <h3>Email Subscription</h3>
-                     <p>Visitors have now the option to subscribe using the email subscription form</p>
-                     <p>You can create unlimited Campaigns</p>
+                   <li>
+                     <img alt="recurring time" src="'.UJICOUNTDOWN_URL.'assets/images/icon-rec.png">
+                     <h3>Recurring Timer</h3>
+                     <p>Introducing the recurring time option</p>
+                     <p>Reschedule the countdown timer after the event has ended</p>
                   </li>
                   <li>
-                     <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-custom.png">
+                     <img alt="email subscription" src="'.UJICOUNTDOWN_URL.'assets/images/icon-email.png">
+                     <h3>Email Subscription</h3>
+                     <p>Visitors have now the option to subscribe using the email subscription form</p>
+                     <p>Create unlimited Campaigns</p>
+                  </li>
+                  <li>
+                     <img alt="responsive" src="'.UJICOUNTDOWN_URL.'assets/images/icon-mob.png">
+                     <h3>Responsive (Premium Version)</h3>
+                     <p>Responsive to all formats. You can use it on your PC, Laptop, Mobile and Tablet</p>
+                  </li>
+                  <li>
+                     <img alt="more customization" src="'.UJICOUNTDOWN_URL.'assets/images/icon-custom.png">
                      <h3>More Customization</h3>
                      <p>Option to enable/disable the units of the time</p>
 				   <p>Option to change the label color and size</p>	 
                   </li>
                   <li>
-                     <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-glob.png">
-                     <h3>Multilanguage</h3>
+                     <img alt="Multilanguage support" src="'.UJICOUNTDOWN_URL.'assets/images/icon-glob.png">
+                     <h3>Multilanguage Support</h3>
                      <p>This plugins come with translation capability. That means can be translated (aka localized) to other languages </p>
                      <p>Quick translation for the units of time </p>
                   </li>
                   <li>
-                     <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-font.png">
+                     <img alt="google fonts" src="'.UJICOUNTDOWN_URL.'assets/images/icon-font.png">
                      <h3>Google Fonts</h3>
                      <p>Now support google fonts inclusion</p>
                   </li>
                   <li>
-                     <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-rtl.png">
+                     <img alt="rtl support" src="'.UJICOUNTDOWN_URL.'assets/images/icon-rtl.png">
                      <h3>Right-To-Left (RTL)</h3>
-                     <p>Support “Left to Right” to Arabic “Right to Left” </p>
+                     <p>Support �Left to Right� to Arabic �Right to Left� </p>
                   </li>
                   <li>
-                     <img alt="security shield" src="'.UJICOUNTDOWN_URL.'assets/images/icon-wp.png">
-                     <h3>WordPress 4.0</h3>
-                     <p>Fully supports WordPress 4.1, while maintaining compatibility through version 3.5+</p>
+                     <img alt="wordpress" src="'.UJICOUNTDOWN_URL.'assets/images/icon-wp.png">
+                     <h3>WordPress 4.1.1</h3>
+                     <p>Fully supports WordPress 4.1.1, while maintaining compatibility through version 3.5+</p>
                   </li>
                </ul>';
          echo '</div></div>';

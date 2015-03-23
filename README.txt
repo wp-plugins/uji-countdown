@@ -2,10 +2,10 @@
 === Uji Countdown ===
 Contributors: ujimoto
 Donate link: http://www.wpmanage.com/uji-countdown
-Tags: countdown, counter, html5 countdown, animated countdown, countdown timer, count down, countdown clock, jQuery countdown, clock, timer
-Requires at least: 3.0
-Tested up to: 4.1
-Stable tag: 2.0.3
+Tags: countdown, counter, html5 countdown, animated countdown, countdown timer, count down, countdown clock, jQuery countdown, clock, timer, recurring timer
+Requires at least: 3.9
+Tested up to: 4.1.1
+Stable tag: 2.0.4
 
 Uji Countdown - HTML5 Customizable Countdown Timer
 
@@ -13,24 +13,35 @@ Uji Countdown - HTML5 Customizable Countdown Timer
 
 Uji Countdown allows you to display a countdown on your post or page. The easiest way to place your full customizable HTML5 Countdown Timer.
 
-Features:
+List of features:
 
-* HTML5 features
-* No flash, only javascript!
+* <strong>NEW:</strong> Recurring Timer
+* <strong>NEW:</strong> Email Subscription
+* <strong>NEW:</strong> Subscription List CSV export
+* HTML5: No flash, only javascript!
 * Customize of colors for text and background
 * Customize boxes color
 * Enable animation
+* Server Time or User Time option
 * Set the texts for date, time
 * Create unlimited styles
 * Simple using shortcode
 * Multilanguage support for date
 * Add countdown timers from Widgets area
-* Easy translation
+* Translate Labels in your Language
+* Redirect to URL option after expiry
+* Hide option after expiry
+* <strong>Responsive</strong> (Pro/Premium version)
+* <strong>Multiple Timers in Post/Page/Widgets</strong> (Pro/Premium version)
+
 
 [youtube http://www.youtube.com/watch?v=ARNRRsIk6aI]
 
-**Plugin's Official Site**
-WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-countdown/)
+= Demo Site =
+Please feel free to visit our [demo site](http://wpmanage.com/project/ujicountdown/) where you can view some demo styles of Uji Countdown.
+
+> <strong>Plugin's Official Site</strong><br>
+> [Uji Countdown](http://www.wpmanage.com/uji-countdown/)
 
 == Installation ==
 
@@ -40,6 +51,11 @@ WPmanage [(http://www.wpmanage.com/uji-countdown/)](http://www.wpmanage.com/uji-
 4. Place your Countdown in Post/Page via Edit: Post or Page
 
 == Changelog ==
+
+= 2.0.4 =
+* NEW: Recurring Time
+* Fixed shortcodes issue. New tinymce 4.x shortcodes generator.
+* Fixed URL redirection after expiry
 
 = 2.0.3 =
 * NEW: Email Subscription

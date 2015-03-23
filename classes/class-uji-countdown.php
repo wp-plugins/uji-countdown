@@ -375,7 +375,7 @@ class Uji_Countdown extends Uji_Countdown_Admin
         unset( $options['ujic_name'], $options['ujic_style'], $options['submit_ujic'] );
         //insert to DB
         $wpdb->query( $wpdb->prepare( "INSERT INTO " . self::ujic_tab_name() . "(time, title, style, options )
-		    						 VALUES (utc_timestamp(), %s, %s, %s)", trim( $title ), trim( $style ), maybe_serialize( $options )
+		    						 VALUES (utc_timestamp(), %s, %s, %s)",$title, trim( $style ), maybe_serialize( $options )
         ) );
     }
 
@@ -396,7 +396,7 @@ class Uji_Countdown extends Uji_Countdown_Admin
         $style = $options['ujic_style'];
         unset( $options['ujic_name'], $options['ujic_style'], $options['submit_ujic'], $options['cancel_ujic'] );
         //update DB
-        $wpdb->query( $wpdb->prepare( "UPDATE " . self::ujic_tab_name() . " SET title=%s, style=%s, options=%s  WHERE id=%d", trim( $title ), trim( $style ), maybe_serialize( $options ), $id
+        $wpdb->query( $wpdb->prepare( "UPDATE " . self::ujic_tab_name() . " SET title=%s, style=%s, options=%s  WHERE id=%d", $title, trim( $style ), maybe_serialize( $options ), $id
         ) );
     }
 
@@ -587,10 +587,11 @@ class Uji_Countdown extends Uji_Countdown_Admin
         if($screen->id != $this->plugin_screen_hook_suffix)
             return;
 
-        if(empty($_GET['tab']) || ($_GET['tab'] !== 'tab_ujic_new' && $_GET['tab'] !== 'tab_ujic_news'))
+        if(empty($_GET['tab']) ||  $_GET['tab'] !== 'tab_ujic_news')
             return;
-
-        echo '<div class="error"><p>' . _('In order to avoid fake subscriptions we suggest to install <a target="_blank" href = "https://wordpress.org/plugins/goodbye-captcha/">GoodBye Captcha Plugin</a>') . '</p></div>';
+        
+        if(!isset($_GET['edit']))
+             echo '<div class="error"><p>' . _('In order to avoid fake subscriptions we suggest to install <a target="_blank" href = "https://wordpress.org/plugins/goodbye-captcha/">GoodBye Captcha Plugin</a>') . '</p></div>';
     }
 
     /**
@@ -654,32 +655,21 @@ class Uji_Countdown extends Uji_Countdown_Admin
         include_once( UJICOUNTDOWN . 'views/admin.php' );
     }
 
-    // ---------------------------------------------------------------------------------------------------
-
     /**
      * Shortcode Admin Init
      *
-     * @since    2.0
+     * @since    2.0.4
      */
     public function ujic_shortcode_scripts() {
         $screen = get_current_screen();
         if ( $screen->base == 'post' ):
             // css
-            wp_enqueue_style( 'ujic-jui', UJICOUNTDOWN_URL . 'assets/tinymce/css/jquery-ui.min.css' );
-            wp_enqueue_style( 'ujic-popup', UJICOUNTDOWN_URL . 'assets/tinymce/css/popup.css', false, '1.0', 'all' );
+            wp_enqueue_style( 'ujic-popup-ui', UJICOUNTDOWN_URL . 'assets/css/jquery-ui.min.css', false, '1.0', 'all' );
+            wp_enqueue_style( 'ujic-popup', UJICOUNTDOWN_URL . 'assets/css/ujic-style.css', false, '1.0', 'all' );
 
             // js
             wp_enqueue_script( 'jquery-ui-sortable' );
             wp_enqueue_script( 'jquery-ui-datepicker' );
-            wp_enqueue_script( 'jquery-livequery', UJICOUNTDOWN_URL . 'assets/tinymce/js/jquery.livequery.js', false, '1.1.1', false );
-            wp_enqueue_script( 'jquery-appendo', UJICOUNTDOWN_URL . 'assets/tinymce/js/jquery.appendo.js', false, '1.0', false );
-            wp_enqueue_script( 'base64', UJICOUNTDOWN_URL . 'assets/tinymce/js/base64.js', false, '1.0', false );
-            if ( floatval( get_bloginfo( 'version' ) ) >= 3.9 ) {
-                wp_enqueue_script( 'ujic-popup', UJICOUNTDOWN_URL . 'assets/tinymce/js/popup.js', false, '1.0', false );
-            } else {
-                wp_enqueue_script( 'ujic-popup', UJICOUNTDOWN_URL . 'assets/tinymce/js/popup.old.js', false, '1.0', false );
-                //For older versions of WP
-            }
 
             wp_localize_script( 'jquery', 'UjicShortcodes', array( 'plugin_folder' => UJICOUNTDOWN_URL ) );
 
@@ -687,33 +677,89 @@ class Uji_Countdown extends Uji_Countdown_Admin
                 return;
 
             if ( get_user_option( 'rich_editing' ) == 'true' ) {
-                add_filter( 'mce_external_plugins', array( &$this, 'add_rich_plugins' ) );
-                add_filter( 'mce_buttons', array( &$this, 'register_rich_buttons' ) );
+                 wp_localize_script('editor', 'ujic_short_vars', array(
+                    'ujic_style' => $this->ujic_styles_get(),
+                    'ujic_hou' => $this->ujic_datetime_get(23),
+                    'ujic_min' => $this->ujic_datetime_get(59),
+                    'ujic_reclab' => $this->ujic_reclab_get()
+                ));
+                
+                add_filter( 'mce_external_plugins', array( &$this, 'ujic_add_tinymce_plugin' ) );
+		add_filter( 'mce_buttons', array( &$this, 'ujic_register_my_tc_button' ) );
             }
         endif;
     }
 
-    /**
-     * Defins TinyMCE rich editor js plugin
-     *
-     * @return	void
-     */
-    public function add_rich_plugins( $plugin_array ) {
-        if ( floatval( get_bloginfo( 'version' ) ) >= 3.9 ) {
-            $plugin_array['ujicShortcodes'] = UJICOUNTDOWN_URL . 'assets/tinymce/plugin.js';
-        } else {
-            $plugin_array['ujicShortcodes'] = UJICOUNTDOWN_URL . 'assets/tinymce/plugin.old.js'; // For old versions of WP
+   /**
+    * get All Styles
+    *
+    * @since    2.0.4
+    */
+    public function ujic_styles_get() {
+        global $wpdb;
+        $ujic_styles = $wpdb->get_results("SELECT style, title FROM " . $wpdb->prefix . "uji_counter ORDER BY `time` DESC");
+        $ujic_sel = array();
+        if ( !empty($ujic_styles) ) {
+            $i = 0;
+            foreach ( $ujic_styles as $ujic ) {
+                $ujic_sel[$i]['text'] =  $ujic->title . ' - ' . $ujic->style;
+                $ujic_sel[$i]['value'] = $ujic->title;
+                $i++;
+            }
+
+         return $ujic_sel;
         }
-        return $plugin_array;
     }
 
-    /**
-     * Adds TinyMCE rich editor buttons
-     *
-     * @return	void
-     */
-    public function register_rich_buttons( $buttons ) {
-        array_push( $buttons, "|", 'ujic_button' );
+   /**
+    * TinyMCE get Data/Time
+    *
+    * @since    2.0.4
+    */
+    public function ujic_datetime_get($nr) {
+        $ujic_sel = array();
+        for ( $i = 0; $i <= $nr; $i++ ) {
+             $ujic_sel[$i]['text'] = $num[sprintf("%02s", $i)] = sprintf("%02s", $i);
+             $ujic_sel[$i]['value'] = $num[sprintf("%02s", $i)] = sprintf("%02s", $i);
+        }
+
+        return $ujic_sel;
+    }
+
+   /**
+    * TinyMCE get Unit Time labels
+    *
+    * @since    2.0.4
+    */
+    public function ujic_reclab_get() {
+        $tlab = array('second'=> 'Second(s)', 'minute'=> 'Minute(s)', 'hour'=> 'Hour(s)', 'day'=> 'Day(s)', 'week'=> 'Week(s)', 'month'=> 'Month(s)');
+        $i=0;
+        foreach ( $tlab as $v => $n ) {
+            $ujic_sel[$i]['text'] = $n;
+            $ujic_sel[$i]['value'] = $v;
+            $i++;
+        }
+
+        return $ujic_sel;
+    }
+
+   /**
+    * TinyMCE Plugin JS
+    *
+    * @since    2.0.4
+    */
+    public function ujic_add_tinymce_plugin( $plugin_array ) {
+        $plugin_array['ujic_tc_button'] = UJICOUNTDOWN_URL . 'assets/js/ujic-popup-button.js';
+        return $plugin_array;
+    }
+    
+   /**
+    * Add TyniMCE Button
+    *
+    * @since    2.0.4
+    */
+    public function ujic_register_my_tc_button( $buttons ) {
+        array_push( $buttons, "ujic_tc_button" );
         return $buttons;
     }
     
@@ -736,11 +782,9 @@ class Uji_Countdown extends Uji_Countdown_Admin
     * @since    2.0
     */
    public function ujic_get_option( $name, $opt = 'ujic_set' ) {
-
       $vars = get_option($opt);
-      if($name && isset($vars[$name]) && !empty($vars[$name]) ) {
-          return $vars[$name];
-      }
+      if($name && isset($vars[$name]) && !empty($vars[$name]) )
+         return $vars[$name];
       else
          return false;      
    }   

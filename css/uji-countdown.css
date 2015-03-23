@@ -16,7 +16,7 @@
 .ujic-classic span.countdown_amount {
 	display: inline-block;
 	color: #fff;
-	padding: 5px;
+	padding: 5px 8px;
 	margin-right: 2px;
 
 	font: 35px/1.5 'Open Sans Condensed',sans-serif;

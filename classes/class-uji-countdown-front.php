@@ -65,17 +65,61 @@ class UjiCountdown extends Uji_Countdown {
                         'expire' => "",
                         'hide' => "",
                         'url' => "",
-                        'subscr' => ""
+                        'subscr' => "",
+                        'recurring' => "",
+                        'rectype' => "",
+                        'repeats' => ""
                         ), $atts ) );
         //Increment counters
         static $ujic_count = 0;
 
+        $rectime = false;
+
+        //2015/03/24 05:05
         $unx_time = strtotime( $expire . ":00" );
         $now_time = (int) current_time( 'timestamp' );
+        
+        //Reccuring time
+        if( $rectype && $recurring && is_numeric( $recurring ) ){
+            //add multiple hour -> hours
+            $rectype = intval($recurring) > 1 ? $rectype.'s' : $rectype;
+             
+            //Repeats
+            if( $repeats && intval($repeats) > 0 ){
+                
+                //add time
+                for( $t=1; $t<=intval($repeats); $t++){
+                    $ujictime = strtotime( '+' . ($recurring*$t) . ' ' . $rectype, $unx_time ); 
+                    if( $now_time < $ujictime){
+                        $rectime = true;
+                        break;
+                    }
+                }
+                
+            }else{
+                 //init time
+                 $ujictime = strtotime( '+' . $recurring . ' ' . $rectype, $unx_time );
+                 $t = 1;
+                 //repeat unlimited times
+                 while( $now_time > $ujictime){
+                     $ujictime = strtotime( '+' . ($recurring*$t) . ' ' . $rectype, $unx_time );
+                     $t++;
+                 }
+                 $rectime = true;
+            }
+            
+        }
+        //End Reccuring
 
-        if ( ($hide == "true" && $now_time > $unx_time) || $ujic_count > 0 ) {
+        if ( ($hide == "true" && $now_time > $unx_time && !$rectime) || $ujic_count > 0 ) {
+            
             return $content;
+            
         } else {
+            
+            //reccuring time
+            if($rectime)
+                $expire = date('Y/m/d H:i', $ujictime); //2015/03/24 05:05
 
             //get all vars
             $get_vars = self::uji_vars();
@@ -83,9 +127,6 @@ class UjiCountdown extends Uji_Countdown {
             foreach ($get_vars as $nm => $var){
                  ${$nm} = $this->sel_ujic_db( $id, $var );
             }
-
-
-
 
             $ujic_id = 'ujiCountdown';
             $classh = !empty( $ujic_style ) ? ' ujic-' . $ujic_style : '';

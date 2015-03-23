@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Plugin Name: Uji Countdown
+ * Plugin Name: Uji Countdown Premium 2.0 
  * Plugin URI: http://www.wpmanage.com/uji-countdown/
  * Description: HTML5 Countdown.
  * Version: 2.0
@@ -46,7 +46,7 @@ class ujic_Widget extends WP_Widget {
          return;
 
       wp_enqueue_script( 'jquery-ui-datepicker' );
-      wp_enqueue_style( 'jquery-ui', UJICOUNTDOWN_URL . 'assets/tinymce/css/jquery-ui.min.css' );
+      wp_enqueue_style( 'jquery-ui', UJICOUNTDOWN_URL . 'assets/css/jquery-ui.min.css' );
       wp_enqueue_script( 'jquery-widget', UJICOUNTDOWN_URL . 'assets/js/widget.js' );
    }
    
@@ -73,7 +73,24 @@ class ujic_Widget extends WP_Widget {
          return false;
       }
    }
-
+   
+   /**
+     * Uji Countdown Time select
+     *
+     * @since   2.0.4
+     *
+     * @var     string
+     */
+   public function ujic_times( $sel = NULL ) {
+        $times = array('second'=> 'Second(s)', 'minute'=> 'Minute(s)', 'hour'=> 'Hour(s)', 'day'=> 'Day(s)', 'week'=> 'Week(s)', 'month'=> 'Month(s)');
+        
+        foreach ( $times as $value => $option ) {
+            $select = (isset( $sel ) && !empty( $sel ) && $sel == $value ) ? ' selected="selected"' : '';
+            $output .= '<option value="' . $value . '" ' . $select . '>' . $option . '</option>' . "\n";
+        }
+        
+        return $output;
+    }
    /**
      * Uji Countdown Get Time/Date
      *
@@ -113,15 +130,22 @@ class ujic_Widget extends WP_Widget {
       $hide = isset( $instance['UJI_hide'] ) ? $instance['UJI_hide'] : false;
       $url = isset( $instance['UJI_url'] ) ? $instance['UJI_url'] : false;
       $subscr = isset( $instance['UJI_subscr'] ) ? $instance['UJI_subscr'] : false;
+      $recurr = isset( $instance['UJI_recurring'] ) ? $instance['UJI_recurring'] : false;
+      $rectyp = isset( $instance['UJI_rectype'] ) ? $instance['UJI_rectype'] : false;
+      $repeat = isset( $instance['UJI_repeats'] ) ? $instance['UJI_repeats'] : false;
 
       $shtval = '';
-      $shtval .= (!empty( $name ) ) ? ' id="' . $name . '"' : $shtval;
-      $shtval .= (!empty( $date ) ) ? ' expire="' . $date . ' ' . $hour . ':' . $minut . '"' : $shtval;
-      $shtval .= (!empty( $hide ) ) ? ' hide = "true"' : $shtval;
-      $shtval .= ( empty( $hide ) && !empty( $url ) ) ? ' url = "' . $url . '"' : $shtval;
-      $shtval .= ( empty( $subscr ) ) ? ' subscr = "' . trim($subscr) . '"' : $shtval;
+      $shtval .= (!empty( $name ) ) ? ' id="' . $name . '"' : '';
+      $shtval .= (!empty( $date ) ) ? ' expire="' . $date . ' ' . $hour . ':' . $minut . '"' : '';
+      $shtval .= (!empty( $hide ) ) ? ' hide = "true"' : '';
+      $shtval .= (!empty( $url ) ) ? ' url = "' . $url . '"' : '';
+      $shtval .= (!empty( $subscr ) ) ? ' subscr = "' . trim($subscr) . '"' : '';
+      $shtval .= (!empty( $recurr ) ) ? ' recurring = "' . trim($recurr) . '"' : '';
+      $shtval .= (!empty( $rectyp ) ) ? ' rectype = "' . trim($rectyp) . '"' : '';
+      $shtval .= (!empty( $repeat ) ) ? ' repeats = "' . trim($repeat) . '"' : '';
     
       $shortcode = (!empty( $shtval ) ) ? '[ujicountdown' . $shtval . ']' : '';
+
 
       if ( !empty( $shortcode ) ) {
          echo $before_widget;
@@ -149,6 +173,9 @@ class ujic_Widget extends WP_Widget {
       $instance['UJI_hide'] = strip_tags( $new_instance['UJI_hide'] );
       $instance['UJI_url'] = strip_tags( $new_instance['UJI_url'] );
       $instance['UJI_subscr'] = strip_tags( $new_instance['UJI_subscr'] );
+      $instance['UJI_recurring'] = strip_tags( $new_instance['UJI_recurring'] );
+      $instance['UJI_rectype'] = strip_tags( $new_instance['UJI_rectype'] );
+      $instance['UJI_repeats'] = strip_tags( $new_instance['UJI_repeats'] );
 
       return $instance;
    }
@@ -170,14 +197,14 @@ class ujic_Widget extends WP_Widget {
           'UJI_minutes' => 59,
           'UJI_hide' => '',
           'UJI_url' => '',
-          'UJI_subscr' => ''
+          'UJI_subscr' => '',
+          'UJI_recurring' => '',
+          'UJI_rectype' => '',
+          'UJI_repeats' => ''
       );
 
       $instance = wp_parse_args( (array) $instance, $defaults );
-      ?>
-      <p style="font-size:11px">
-         Only one timer on page is allowed. <br>Check the <a href="http://wpmanage.com/uji-countdown" target="_blank">Premium version</a> for multiple countdown timers on the same page. 
-      <p>
+      ?>      
       <!-- Widget Title: Text Input -->
       <p>
          <label for="<?php echo $this->get_field_id( 'UJI_title' ); ?>"><?php _e( 'Title (optional):', $this->plugin_slug ); ?></label>
@@ -247,7 +274,24 @@ class ujic_Widget extends WP_Widget {
          <input class="widefat ujic_link" id="<?php echo $this->get_field_id( 'UJI_url' ); ?>" name="<?php echo $this->get_field_name( 'UJI_url' ); ?>" type="text" value="<?php echo $instance['UJI_url']; ?>" />
       </p>
       
-       <!-- Widget Campaign name -->
+      <!-- Widget Select Reccuring Time -->
+      <h4><?php _e( 'Reccuring Time:', $this->plugin_slug ); ?> </h4>
+      
+      <p style="display:block; float: none;">
+        <span style="float:left; display: block; line-height: 28px; min-width: 55px; margin-right: 4px;">Every: </span><input class="small-text" style="float:left; padding: 3px 5px;" id="<?php echo $this->get_field_id( 'UJI_recurring' ); ?>" name="<?php echo $this->get_field_name( 'UJI_recurring' ); ?>" type="text" value="<?php echo $instance['UJI_recurring']; ?>" />
+        <select name="<?php echo $this->get_field_name( 'UJI_rectype' ); ?>" id="<?php echo $this->get_field_id( 'UJI_rectype' ); ?>">
+        <?php
+             echo $this->ujic_times($instance['UJI_rectype']);
+        ?>
+        </select>
+        <div style="display:block; float: none;">
+            <span style="float:left; display: block; line-height: 28px; min-width: 55px; margin-right: 4px;">Repeats: </span><input class="small-text" style="float:left; padding: 3px 5px;" id="<?php echo $this->get_field_id( 'UJI_repeats' ); ?>" name="<?php echo $this->get_field_name( 'UJI_repeats' ); ?>" type="text" value="<?php echo $instance['UJI_repeats']; ?>" />
+            <span style="display: inline-block; line-height: 28px; margin-left: 4px;"> leave it empty for unlimited </span>
+        </div>
+      </p>
+      
+      <!-- Widget Campaign name -->
+       <h4><?php _e( 'Subscription:', $this->plugin_slug ); ?> </h4>
       <p>
          <label for="<?php echo $this->get_field_id( 'UJI_subscr' ); ?>"><?php _e( 'Campaign Name:', $this->plugin_slug ); ?></label><br />
          <input class="widefat ujic_subscr" id="<?php echo $this->get_field_id( 'UJI_subscr' ); ?>" name="<?php echo $this->get_field_name( 'UJI_subscr' ); ?>" type="text" value="<?php echo $instance['UJI_subscr']; ?>" />
