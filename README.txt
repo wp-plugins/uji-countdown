@@ -1,4 +1,3 @@
-
 === Uji Countdown ===
 Contributors: ujimoto
 Donate link: http://www.wpmanage.com/uji-countdown

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Uji Countdown
+Plugin Name: Uji&#32;Countdown
 Plugin URI: http://www.wpmanage.com/uji-countdown
 Description: HTML5 Customizable Countdown.
 Version: 2.0.4
