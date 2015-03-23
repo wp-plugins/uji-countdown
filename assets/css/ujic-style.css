@@ -1,0 +1,85 @@
+i.mce-i-icon {
+	font: 400 20px/1 dashicons;
+	padding: 0;
+	vertical-align: top;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin-left: -2px;
+	padding-right: 2px
+}
+
+i.ujic-own-icon {
+	/*background-image: url('custom-icon.png');*/
+}
+
+#uji-contdown-pop .uji_spacer{
+    display: block;
+    height: 1px;
+    margin: 5px 0;
+    width: 100%;
+    background: #F1F1F1;
+}
+
+#uji-contdown-pop input{
+     background: #f7f7f7;
+}
+
+#uji-contdown-pop #ujic-datapick{
+    background: #f7f7f7 url(images/data-picker.png) right top no-repeat;
+}
+
+/* CSS for high-resolution devices */
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) { 
+/* - datapicker */
+#uji-contdown-pop #ujic-datapick{
+        background: #f7f7f7 url(images/data-picker@2.png) top right no-repeat;
+    }
+}
+
+#uji-contdown-pop #ujic_hou,
+#uji-contdown-pop #ujic_min{
+    width: 60px!important;
+}
+
+#uji-contdown-pop #ujic_time_space{
+    padding: 3px 5px;
+}
+
+#uji-contdown-pop #ujic_hide,
+#uji-contdown-pop #ujic_hide_txt{
+    display: inline;
+}
+
+#uji-contdown-pop #ujic_url_txt{
+    display: block;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+#uji-contdown-pop #ujic_url{
+    display: block;
+}
+
+#uji-contdown-pop #ujic_rev_txt{
+    padding: 6px 22px 0 0;
+}
+
+#uji-contdown-pop #ujic_rev,
+#uji-contdown-pop #ujic_rep{
+    width: 50px!important;
+    margin-right: 4px;
+}
+
+#uji-contdown-pop #ujic_rep_txt,
+#uji-contdown-pop #ujic_rep_des{
+    padding: 6px 5px 0 0;
+}
+
+#uji-contdown-pop #ujic_rep_des{
+    font-size: 12px;
+    font-style: italic;
+    color: #9b9b9b;
+}
